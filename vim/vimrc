@@ -2,6 +2,9 @@
 
 set nocompatible
 
+" Pathogen
+call pathogen#infect()
+
 syntax enable
 filetype plugin indent on
 
@@ -37,5 +40,5 @@ set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 
-color Tomorrow-Night
+color Tomorrow
 
