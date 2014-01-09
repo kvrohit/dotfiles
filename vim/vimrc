@@ -1,12 +1,18 @@
 " Vim configuration
 
 set nocompatible
+filetype off
 
-" Pathogen
-call pathogen#infect()
+" Vundle
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
 
-syntax enable
+Bundle 'gmarik/vundle'
+Bundle 'nanotech/jellybeans.vim'
+Bundle 'scrooloose/nerdtree'
+
 filetype plugin indent on
+syntax enable
 
 set showcmd
 set showmode
@@ -32,13 +38,19 @@ set scrolloff=3
 
 set title
 
+set noswapfile
 set nobackup
 set nowritebackup
 set directory=$HOME/.vim/tmp//,.
 
-set tabstop=2
+" Use spaces instead of tabs
+set expandtab 
 set shiftwidth=2
 set softtabstop=2
 
-color Tomorrow
+" set background=dark
+color Tomorrow-Night
+
+" transparent background
+highlight Normal ctermbg=NONE
 
