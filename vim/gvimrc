@@ -1,9 +1,0 @@
-" Graphical vim configuration
-
-set guioptions-=T
-set background=light
-set lines=40 columns=150
-set encoding=utf-8
-set guifont=Meslo\ LG\ M\ DZ\ 11
-winpos 60 40
-
