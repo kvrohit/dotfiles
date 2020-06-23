@@ -1,395 +1,130 @@
-" Fish doesn't play all that well with others
-set shell=/bin/bash
-let mapleader = "\<Space>"
-
-" =============================================================================
-" # PLUGINS
-" =============================================================================
-" Load vundle
-set nocompatible
-filetype off
-call plug#begin()
-
-" Load plugins
-" VIM enhancements
-Plug 'ciaranm/securemodelines'
-Plug 'vim-scripts/localvimrc'
-Plug 'justinmk/vim-sneak'
-
-" GUI enhancements
-Plug 'itchyny/lightline.vim'
-Plug 'w0rp/ale'
-Plug 'machakann/vim-highlightedyank'
-Plug 'andymass/vim-matchup'
-
-" Fuzzy finder
-Plug 'airblade/vim-rooter'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-
-" Syntactic language support
-Plug 'cespare/vim-toml'
-Plug 'rust-lang/rust.vim'
-"Plug 'fatih/vim-go'
-Plug 'dag/vim-fish'
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
-
-Plug 'mhinz/vim-startify'
-Plug 'mboughaba/i3config.vim'
-Plug 'w0ng/vim-hybrid'
-
-call plug#end()
-
-if has('nvim')
-    set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
-    set inccommand=nosplit
-    noremap <C-q> :confirm qall<CR>
-end
-
-" Colors
-set termguicolors
-set background=dark
-colorscheme hybrid
-hi Normal ctermbg=NONE
 syntax on
 
-" Plugin settings
-let g:secure_modelines_allowed_items = [
-                \ "textwidth",   "tw",
-                \ "softtabstop", "sts",
-                \ "tabstop",     "ts",
-                \ "shiftwidth",  "sw",
-                \ "expandtab",   "et",   "noexpandtab", "noet",
-                \ "filetype",    "ft",
-                \ "foldmethod",  "fdm",
-                \ "readonly",    "ro",   "noreadonly", "noro",
-                \ "rightleft",   "rl",   "norightleft", "norl",
-                \ "colorcolumn"
-                \ ]
-
-" Lightline
-let g:lightline = {
-      \ 'component_function': {
-      \   'filename': 'LightlineFilename',
-      \ },
-      \ 'colorscheme': 'one',
-\ }
-function! LightlineFilename()
-  return expand('%:t') !=# '' ? @% : '[No Name]'
-endfunction
-
-" from http://sheerun.net/2014/03/21/how-to-boost-your-vim-productivity/
-if executable('ag')
-	set grepprg=ag\ --nogroup\ --nocolor
-endif
-if executable('rg')
-	set grepprg=rg\ --no-heading\ --vimgrep
-	set grepformat=%f:%l:%c:%m
-endif
-
-" Javascript
-let javaScript_fold=0
-
-" Linter
-" only lint on save
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_insert_leave = 1
-let g:ale_lint_on_save = 0
-let g:ale_lint_on_enter = 0
-let g:ale_virtualtext_cursor = 1
-let g:ale_rust_rls_config = {
-	\ 'rust': {
-		\ 'all_targets': 1,
-		\ 'build_on_save': 1,
-		\ 'clippy_preference': 'on'
-	\ }
-	\ }
-let g:ale_rust_rls_toolchain = ''
-let g:ale_linters = {'rust': ['rls']}
-highlight link ALEWarningSign Todo
-highlight link ALEErrorSign WarningMsg
-highlight link ALEVirtualTextWarning Todo
-highlight link ALEVirtualTextInfo Todo
-highlight link ALEVirtualTextError WarningMsg
-highlight ALEError guibg=None
-highlight ALEWarning guibg=None
-let g:ale_sign_error = "✖"
-let g:ale_sign_warning = "⚠"
-let g:ale_sign_info = "i"
-let g:ale_sign_hint = "➤"
-
-nnoremap <silent> K :ALEHover<CR>
-nnoremap <silent> gd :ALEGoToDefinition<CR>
-"nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-
-" Latex
-let g:latex_indent_enabled = 1
-let g:latex_fold_envs = 0
-let g:latex_fold_sections = []
-
-" Open hotkeys
-map <C-p> :Files<CR>
-nmap <leader>; :Buffers<CR>
-
-" Quick-save
-nmap <leader>w :w<CR>
-
-" Don't confirm .lvimrc
-let g:localvimrc_ask = 0
-
-" racer + rust
-" https://github.com/rust-lang/rust.vim/issues/192
-let g:rustfmt_command = "rustfmt +nightly"
-let g:rustfmt_autosave = 1
-let g:rustfmt_emit_files = 1
-let g:rustfmt_fail_silently = 0
-let g:rust_clip_command = 'xclip -selection clipboard'
-"let g:racer_cmd = "/usr/bin/racer"
-"let g:racer_experimental_completer = 1
-let $RUST_SRC_PATH = systemlist("rustc --print sysroot")[0] . "/lib/rustlib/src/rust/src"
-
-" Completion
-set completeopt=noinsert,menuone,noselect
-" tab to select
-" and don't hijack my enter key
-inoremap <expr><Tab> (pumvisible()?(empty(v:completed_item)?"\<C-n>":"\<C-y>"):"\<Tab>")
-inoremap <expr><CR> (pumvisible()?(empty(v:completed_item)?"\<CR>\<CR>":"\<C-y>"):"\<CR>")
-
-" =============================================================================
-" # Editor settings
-" =============================================================================
-filetype plugin indent on
-set autoindent
-set timeoutlen=300 " http://stackoverflow.com/questions/2158516/delay-before-o-opens-a-new-line
-set encoding=utf-8
-set scrolloff=2
-set noshowmode
+set guicursor=
+set noshowmatch
+set nohlsearch
 set hidden
+set noerrorbells
+set tabstop=4 softtabstop=4
+set shiftwidth=4
+set expandtab
+set smartindent
+set nu rnu
 set nowrap
-set nojoinspaces
-let g:sneak#s_next = 1
-let g:vim_markdown_new_list_item_indent = 0
-let g:vim_markdown_auto_insert_bullets = 0
-let g:vim_markdown_frontmatter = 1
-set printfont=:h10
-set printencoding=utf-8
-set printoptions=paper:letter
-" Always draw sign column. Prevent buffer moving when adding/deleting sign.
+set smartcase
+set noswapfile
+set nobackup
+set undodir=~/.vim/undodir
+set undofile
+set incsearch
+set termguicolors
+set autoread
+set noshowmode
+
+" more space for displaying messages
+set cmdheight=2
+
+" better user experience
+set updatetime=300
+set shortmess+=c
 set signcolumn=yes
+set cursorline
 
-" Settings needed for .lvimrc
-set exrc
-set secure
-
-" Sane splits
+" sane split
 set splitright
 set splitbelow
 
-" Permanent undo
-set undodir=~/.vimdid
-set undofile
+let mapleader = " "
 
-" Decent wildmenu
-set wildmenu
-set wildmode=list:longest
-set wildignore=.hg,.svn,*~,*.png,*.jpg,*.gif,*.settings,Thumbs.db,*.min.js,*.swp,publish/*,intermediate/*,*.o,*.hi,Zend,vendor
+" open
+map <C-p> :Files<CR>
+nmap <leader>; :Buffers<CR>
+nmap <leader><leader> :bn<CR>
 
-" Use wide tabs
-set shiftwidth=4
-set softtabstop=4
-set tabstop=4
-set expandtab
+" quick-save
+nmap <leader>w :w<CR>
 
-" Wrapping options
-set formatoptions=tc " wrap text and comments using textwidth
-set formatoptions+=r " continue comments when pressing ENTER in I mode
-set formatoptions+=q " enable formatting of comments with gq
-set formatoptions+=n " detect lists for formatting
-set formatoptions+=b " auto-wrap in insert mode, and do not wrap old long lines
+" nice line numbers
+augroup numbertoggle
+    autocmd!
+    autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+    autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
 
-" Proper search
-set incsearch
-set ignorecase
-set smartcase
-set gdefault
+" plugins
+call plug#begin('~/.vim/plugged')
+    " enhancements
+    Plug 'itchyny/lightline.vim'
+    Plug 'shinchu/lightline-gruvbox.vim'
+    Plug 'cocopon/lightline-hybrid.vim'
+    Plug 'mhinz/vim-startify'
+    Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
+    Plug 'lotabout/skim.vim'
+    Plug 'dense-analysis/ale'
 
-" Search results centered please
-nnoremap <silent> n nzz
-nnoremap <silent> N Nzz
-nnoremap <silent> * *zz
-nnoremap <silent> # #zz
-nnoremap <silent> g* g*zz
+    " vifm
+    Plug 'vifm/vifm.vim'
 
-" Very magic by default
-nnoremap ? ?\v
-nnoremap / /\v
-cnoremap %s/ %sm/
+    " vim-task
+    Plug 'kvrohit/nvim-tasks'
 
-" =============================================================================
-" # GUI settings
-" =============================================================================
-set guioptions-=T " Remove toolbar
-set vb t_vb= " No more beeps
-set backspace=2 " Backspace over newlines
-set nofoldenable
-set ruler " Where am I?
-set ttyfast
-" https://github.com/vim/vim/issues/1735#issuecomment-383353563
-set lazyredraw
-set synmaxcol=500
-set laststatus=2
-set number " Also show current absolute line
-set diffopt+=iwhite " No whitespace in vimdiff
-" Make diffing better: https://vimways.org/2018/the-power-of-diff/
-set diffopt+=algorithm:patience
-set diffopt+=indent-heuristic
-set colorcolumn=100 " and give me a colored column
-set showcmd " Show (partial) command in status line.
-set mouse=a " Enable mouse usage (all modes) in terminals
-set shortmess+=c " don't give |ins-completion-menu| messages.
+    " language support
+    Plug 'rust-lang/rust.vim'
+    Plug 'prettier/vim-prettier', { 'do': 'npm install' }
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
-" Show those damn hidden characters
-" Verbose: set listchars=nbsp:¬,eol:¶,extends:»,precedes:«,trail:•
-set nolist
-set listchars=nbsp:¬,extends:»,precedes:«,trail:•
+    " color schemes
+    Plug 'morhetz/gruvbox'
+    Plug 'w0ng/vim-hybrid'
+call plug#end()
 
-" =============================================================================
-" # Keyboard shortcuts
-" =============================================================================
-" ; as :
-nnoremap ; :
+let g:lightline = {}
+let g:lightline.colorscheme = 'gruvbox'
 
-" Ctrl+c and Ctrl+j as Esc
-inoremap <C-j> <Esc>
-vnoremap <C-j> <Esc>
-inoremap <C-c> <Esc>
-vnoremap <C-c> <Esc>
+colorscheme gruvbox
+set background=dark
+hi! Normal ctermbg=NONE guibg=NONE 
+hi! NonText ctermbg=NONE guibg=NONE guifg=NONE ctermfg=NONE
 
-" Suspend with Ctrl+f
-inoremap <C-f> :sus<cr>
-vnoremap <C-f> :sus<cr>
-nnoremap <C-f> :sus<cr>
-
-" Jump to start and end of line using the home row keys
-map H ^
-map L $
-
-" Neat X clipboard integration
-" ,p will paste clipboard into buffer
-" ,c will copy entire buffer into clipboard
-noremap <leader>p :read !xsel --clipboard --output<cr>
-noremap <leader>c :w !xsel -ib<cr><cr>
-
-" <leader>s for Rg search
-noremap <leader>s :Rg
-
-" Open new file adjacent to current file
-nnoremap <leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
-
-" No arrow keys --- force yourself to use the home row
-nnoremap <up> <nop>
-nnoremap <down> <nop>
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
-
-" Left and right can switch buffers
-nnoremap <left> :bp<CR>
-nnoremap <right> :bn<CR>
-
-" Move by line
-nnoremap j gj
-nnoremap k gk
-
-" Jump to next/previous error
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
-nmap <silent> L <Plug>(ale_lint)
-nmap <silent> <C-l> <Plug>(ale_detail)
-nmap <silent> <C-g> :close<cr>
-
-" <leader><leader> toggles between buffers
-nnoremap <leader><leader> <c-^>
-
-" <leader>= reformats current tange
-nnoremap <leader>= :'<,'>RustFmtRange<cr>
-
-" <leader>, shows/hides hidden characters
-nnoremap <leader>, :set invlist<cr>
-
-" <leader>q shows stats
-nnoremap <leader>q g<c-g>
-
-" Keymap for replacing up to next _ or -
-noremap <leader>m ct_
-noremap <leader>n ct-
-
-" M to make
-noremap M :!make -k -j4<cr>
-
-" I can type :help on my own, thanks.
-map <F1> <Esc>
-imap <F1> <Esc>
-
-
-" =============================================================================
-" # Autocommands
-" =============================================================================
-
-" Prevent accidental writes to buffers that shouldn't be edited
-autocmd BufRead *.orig set readonly
-autocmd BufRead *.pacnew set readonly
-
-" Leave paste mode when leaving insert mode
-autocmd InsertLeave * set nopaste
-
-" Jump to last edit position on opening file
-if has("autocmd")
-  " https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
-  au BufReadPost * if expand('%:p') !~# '\m/\.git/' && line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+if executable('rg')
+    let g:rg_derive_root='true'
 endif
 
-" Auto-make less files on save
-autocmd BufWritePost *.less if filereadable("Makefile") | make | endif
+let loaded_matchparen = 1
 
-" Follow Rust code style rules
-au Filetype rust source ~/.config/nvim/scripts/spacetab.vim
-au Filetype rust set colorcolumn=100
+" better netrw
+let g:netrw_liststyle = 3
+let g:netrw_banner = 0
+let g:netrw_winsize = 20
 
-" Help filetype detection
-autocmd BufRead *.plot set filetype=gnuplot
-autocmd BufRead *.md set filetype=markdown
-autocmd BufRead *.lds set filetype=ld
-autocmd BufRead *.tex set filetype=tex
-autocmd BufRead *.trm set filetype=c
-autocmd BufRead *.xlsx.axlsx set filetype=ruby
+" auto format rust files on save
+let g:rustfmt_autosave = 1
 
-" Script plugins
-autocmd Filetype html,xml,xsl,php source ~/.config/nvim/scripts/closetag.vim
+nnoremap <leader>h :wincmd h<CR>
+nnoremap <leader>j :wincmd j<CR>
+nnoremap <leader>k :wincmd k<CR>
+nnoremap <leader>l :wincmd l<CR>
 
-if has("nvim")
-    tnoremap <Esc> <C-\><C-n>
-    tnoremap <M-[> <Esc>
-    tnoremap <C-v><Esc> <Esc>
-    tnoremap <M-h> <c-\><c-n><c-w>h
-    tnoremap <M-j> <c-\><c-n><c-w>j
-    tnoremap <M-k> <c-\><c-n><c-w>k
-    tnoremap <M-l> <c-\><c-n><c-w>l
-    " Insert mode:
-    inoremap <M-h> <Esc><c-w>h
-    inoremap <M-j> <Esc><c-w>j
-    inoremap <M-k> <Esc><c-w>k
-    inoremap <M-l> <Esc><c-w>l
-    " Visual mode:
-    vnoremap <M-h> <Esc><c-w>h
-    vnoremap <M-j> <Esc><c-w>j
-    vnoremap <M-k> <Esc><c-w>k
-    vnoremap <M-l> <Esc><c-w>l
-    " Normal mode:
-    nnoremap <M-h> <c-w>h
-    nnoremap <M-j> <c-w>j
-    nnoremap <M-k> <c-w>k
-    nnoremap <M-l> <c-w>l
-endif
+function! ChangeColorScheme(scheme) abort
+    let g:lightline.colorscheme = a:scheme
+    execute "colorscheme " . a:scheme
+    hi! Normal ctermbg=NONE guibg=NONE 
+    hi! NonText ctermbg=NONE guibg=NONE guifg=NONE ctermfg=NONE
+    call lightline#init()
+    call lightline#colorscheme()
+    call lightline#update()
+endfunction
+
+" switch colorscheme
+nnoremap <F1> :call ChangeColorScheme("gruvbox")<CR>
+nnoremap <F2> :call ChangeColorScheme("hybrid")<CR>
+
+" open vifm
+nnoremap <F5> :Vifm<CR>
+
+" clipboard
+noremap <leader>yy "*y
+noremap <leader>pp "*p
+
+source $HOME/.config/nvim/plug-config/coc.vim
+
