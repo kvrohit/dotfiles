@@ -61,6 +61,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
     Plug 'lotabout/skim.vim'
     Plug 'dense-analysis/ale'
+    Plug 'tpope/vim-fugitive'
 
     " vifm
     Plug 'vifm/vifm.vim'
