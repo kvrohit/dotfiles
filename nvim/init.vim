@@ -76,6 +76,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'rafi/awesome-vim-colorschemes'
     Plug 'shinchu/lightline-gruvbox.vim'
     Plug 'cocopon/lightline-hybrid.vim'
+    Plug 'sainnhe/forest-night'
 call plug#end()
 
 colorscheme gruvbox
@@ -115,7 +116,11 @@ nnoremap <leader>tt :ToggleTask<CR>
 nnoremap <leader>td :UndoTask<CR>
 
 function! ChangeColorScheme(scheme) abort
-    let g:lightline.colorscheme = a:scheme
+    let l:color = a:scheme
+    if (a:scheme == "forest-night")
+        let l:color = "forest_night"
+    endif
+    let g:lightline.colorscheme = l:color
     execute "colorscheme " . a:scheme
     call lightline#init()
     call lightline#colorscheme()
@@ -129,6 +134,7 @@ nnoremap <F3> :call ChangeColorScheme("iceberg")<CR>
 nnoremap <F4> :call ChangeColorScheme("nord")<CR>
 nnoremap <F5> :call ChangeColorScheme("PaperColor")<CR>
 nnoremap <F6> :call ChangeColorScheme("onedark")<CR>
+nnoremap <F7> :call ChangeColorScheme("forest-night")<CR>
 
 let g:lightline = {
   \   'active': {
