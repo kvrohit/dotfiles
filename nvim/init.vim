@@ -54,14 +54,12 @@ augroup END
 " plugins
 call plug#begin('~/.vim/plugged')
     " enhancements
-    Plug 'itchyny/lightline.vim'
-    Plug 'shinchu/lightline-gruvbox.vim'
-    Plug 'cocopon/lightline-hybrid.vim'
     Plug 'mhinz/vim-startify'
     Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
     Plug 'lotabout/skim.vim'
     Plug 'dense-analysis/ale'
     Plug 'tpope/vim-fugitive'
+    Plug 'itchyny/lightline.vim'
 
     " vifm
     Plug 'vifm/vifm.vim'
@@ -72,20 +70,19 @@ call plug#begin('~/.vim/plugged')
     " language support
     Plug 'rust-lang/rust.vim'
     Plug 'prettier/vim-prettier', { 'do': 'npm install' }
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+    Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
     " color schemes
-    Plug 'morhetz/gruvbox'
-    Plug 'w0ng/vim-hybrid'
+    Plug 'rafi/awesome-vim-colorschemes'
+    Plug 'shinchu/lightline-gruvbox.vim'
+    Plug 'cocopon/lightline-hybrid.vim'
 call plug#end()
-
-let g:lightline = {}
-let g:lightline.colorscheme = 'gruvbox'
 
 colorscheme gruvbox
 set background=dark
-hi! Normal ctermbg=NONE guibg=NONE 
-hi! NonText ctermbg=NONE guibg=NONE guifg=NONE ctermfg=NONE
+
+let g:lightline = {}
+let g:lightline#colorscheme = 'gruvbox'
 
 if executable('rg')
     let g:rg_derive_root='true'
@@ -106,11 +103,20 @@ nnoremap <leader>j :wincmd j<CR>
 nnoremap <leader>k :wincmd k<CR>
 nnoremap <leader>l :wincmd l<CR>
 
+" open vifm
+nnoremap <F12> :Vifm<CR>
+
+" clipboard
+noremap <leader>yy "*y
+noremap <leader>pp "*p
+
+" tasks
+nnoremap <leader>tt :ToggleTask<CR>
+nnoremap <leader>td :UndoTask<CR>
+
 function! ChangeColorScheme(scheme) abort
     let g:lightline.colorscheme = a:scheme
     execute "colorscheme " . a:scheme
-    hi! Normal ctermbg=NONE guibg=NONE 
-    hi! NonText ctermbg=NONE guibg=NONE guifg=NONE ctermfg=NONE
     call lightline#init()
     call lightline#colorscheme()
     call lightline#update()
@@ -119,13 +125,31 @@ endfunction
 " switch colorscheme
 nnoremap <F1> :call ChangeColorScheme("gruvbox")<CR>
 nnoremap <F2> :call ChangeColorScheme("hybrid")<CR>
+nnoremap <F3> :call ChangeColorScheme("iceberg")<CR>
+nnoremap <F4> :call ChangeColorScheme("nord")<CR>
+nnoremap <F5> :call ChangeColorScheme("PaperColor")<CR>
+nnoremap <F6> :call ChangeColorScheme("onedark")<CR>
 
-" open vifm
-nnoremap <F5> :Vifm<CR>
-
-" clipboard
-noremap <leader>yy "*y
-noremap <leader>pp "*p
+let g:lightline = {
+  \   'active': {
+  \     'left': [
+  \         [ 'mode', 'paste' ],
+  \         [ 'gitbranch', 'readonly', 'filename', 'modified' ]
+  \     ]
+  \   },
+  \   'component': {
+  \     'lineinfo': ' %3l:%-2v',
+  \   },
+  \   'component_function': {
+  \     'gitbranch': 'fugitive#head',
+  \   }
+\ }
+let g:lightline.separator = {
+  \   'left': '', 'right': ''
+\}
+let g:lightline.subseparator = {
+  \   'left': '', 'right': '' 
+\}
 
 source $HOME/.config/nvim/plug-config/coc.vim
 
