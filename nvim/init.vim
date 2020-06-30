@@ -74,9 +74,9 @@ call plug#begin('~/.vim/plugged')
 
     " color schemes
     Plug 'rafi/awesome-vim-colorschemes'
-    Plug 'shinchu/lightline-gruvbox.vim'
     Plug 'cocopon/lightline-hybrid.vim'
     Plug 'sainnhe/forest-night'
+    Plug 'haishanh/night-owl.vim'
 call plug#end()
 
 colorscheme gruvbox
@@ -119,6 +119,10 @@ function! ChangeColorScheme(scheme) abort
     let l:color = a:scheme
     if (a:scheme == "forest-night")
         let l:color = "forest_night"
+    elseif (a:scheme == "night-owl")
+        let l:color = "nightowl"
+    elseif (a:scheme == "deep-space")
+        let l:color = "deepspace"
     endif
     let g:lightline.colorscheme = l:color
     execute "colorscheme " . a:scheme
@@ -128,13 +132,16 @@ function! ChangeColorScheme(scheme) abort
 endfunction
 
 " switch colorscheme
-nnoremap <F1> :call ChangeColorScheme("gruvbox")<CR>
-nnoremap <F2> :call ChangeColorScheme("hybrid")<CR>
-nnoremap <F3> :call ChangeColorScheme("iceberg")<CR>
-nnoremap <F4> :call ChangeColorScheme("nord")<CR>
-nnoremap <F5> :call ChangeColorScheme("PaperColor")<CR>
-nnoremap <F6> :call ChangeColorScheme("onedark")<CR>
-nnoremap <F7> :call ChangeColorScheme("forest-night")<CR>
+nnoremap <F1>  :call ChangeColorScheme("gruvbox")<CR>
+nnoremap <F2>  :call ChangeColorScheme("hybrid")<CR>
+nnoremap <F3>  :call ChangeColorScheme("iceberg")<CR>
+nnoremap <F4>  :call ChangeColorScheme("nord")<CR>
+nnoremap <F5>  :call ChangeColorScheme("PaperColor")<CR>
+nnoremap <F6>  :call ChangeColorScheme("onedark")<CR>
+nnoremap <F7>  :call ChangeColorScheme("forest-night")<CR>
+nnoremap <F8>  :call ChangeColorScheme("night-owl")<CR>
+nnoremap <F9>  :call ChangeColorScheme("deep-space")<CR>
+nnoremap <F10> :call ChangeColorScheme("ayu")<CR>
 
 let g:lightline = {
   \   'active': {
@@ -156,6 +163,4 @@ let g:lightline.separator = {
 let g:lightline.subseparator = {
   \   'left': '', 'right': '' 
 \}
-
-source $HOME/.config/nvim/plug-config/coc.vim
 
