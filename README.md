@@ -11,10 +11,10 @@ Configurations for various programs
 
 ### macOS
 
-1. Install Homebrew from [https://brew.sh/]https://brew.sh/
+1. Install Homebrew from https://brew.sh/
 2. Install various apps using `brew install <application>`
 
-## Arch Linux
+### Arch Linux
 
 Install apps using `pacman -S <application>` or from AUR (`yay`)
 
