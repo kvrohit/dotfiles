@@ -1,5 +1,3 @@
-syntax on
-
 " plugins
 call plug#begin('~/.vim/plugged')
     " enhancements
@@ -9,6 +7,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'dense-analysis/ale'
     Plug 'tpope/vim-fugitive'
     Plug 'itchyny/lightline.vim'
+    Plug 'tpope/vim-commentary'
+      map  gc  <Plug>Commentary
+      nmap gcc <Plug>CommentaryLine
 
     " vifm
     Plug 'vifm/vifm.vim'
