@@ -5,8 +5,10 @@ call plug#begin('~/.vim/plugged')
     Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
     Plug 'lotabout/skim.vim'
     Plug 'dense-analysis/ale'
-    Plug 'tpope/vim-fugitive'
     Plug 'itchyny/lightline.vim'
+    Plug 'tpope/vim-repeat'
+    Plug 'tpope/vim-surround'
+    Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-commentary'
       map  gc  <Plug>Commentary
       nmap gcc <Plug>CommentaryLine
@@ -23,10 +25,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'neoclide/coc.nvim', { 'branch': 'release' }
 
     " color schemes
-    Plug 'rafi/awesome-vim-colorschemes'
-    Plug 'cocopon/lightline-hybrid.vim'
     Plug 'sainnhe/forest-night'
-    Plug 'haishanh/night-owl.vim'
+    Plug 'sainnhe/gruvbox-material'
+    Plug 'arcticicestudio/nord-vim'
 call plug#end()
 
 set guicursor=
@@ -81,11 +82,9 @@ augroup numbertoggle
     autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
 
-colorscheme gruvbox
 set background=dark
-
-let g:lightline = {}
-let g:lightline#colorscheme = 'gruvbox'
+let g:gruvbox_material_background = 'soft'
+colorscheme gruvbox-material
 
 if executable('rg')
     let g:rg_derive_root='true'
@@ -125,10 +124,8 @@ function! ChangeColorScheme(scheme) abort
     let l:color = a:scheme
     if (a:scheme == "forest-night")
         let l:color = "forest_night"
-    elseif (a:scheme == "night-owl")
-        let l:color = "nightowl"
-    elseif (a:scheme == "deep-space")
-        let l:color = "deepspace"
+    elseif (a:scheme == "gruvbox-material")
+        let l:color = "gruvbox_material"
     endif
     let g:lightline.colorscheme = l:color
     execute "colorscheme " . a:scheme
@@ -138,18 +135,12 @@ function! ChangeColorScheme(scheme) abort
 endfunction
 
 " switch colorscheme
-nnoremap <F1>  :call ChangeColorScheme("gruvbox")<CR>
-nnoremap <F2>  :call ChangeColorScheme("hybrid")<CR>
-nnoremap <F3>  :call ChangeColorScheme("iceberg")<CR>
-nnoremap <F4>  :call ChangeColorScheme("nord")<CR>
-nnoremap <F5>  :call ChangeColorScheme("PaperColor")<CR>
-nnoremap <F6>  :call ChangeColorScheme("onedark")<CR>
-nnoremap <F7>  :call ChangeColorScheme("forest-night")<CR>
-nnoremap <F8>  :call ChangeColorScheme("night-owl")<CR>
-nnoremap <F9>  :call ChangeColorScheme("deep-space")<CR>
-nnoremap <F10> :call ChangeColorScheme("ayu")<CR>
+nnoremap <F1>  :call ChangeColorScheme("gruvbox-material")<CR>
+nnoremap <F2>  :call ChangeColorScheme("forest-night")<CR>
+nnoremap <F3>  :call ChangeColorScheme("nord")<CR>
 
 let g:lightline = {
+  \   'colorscheme': 'gruvbox_material',
   \   'active': {
   \     'left': [
   \         [ 'mode', 'paste' ],
