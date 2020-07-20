@@ -10,8 +10,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-surround'
     Plug 'tpope/vim-fugitive'
     Plug 'tpope/vim-commentary'
-      map  gc  <Plug>Commentary
-      nmap gcc <Plug>CommentaryLine
+        map  gc  <Plug>Commentary
+        nmap gcc <Plug>CommentaryLine
 
     " vifm
     Plug 'vifm/vifm.vim'
@@ -28,6 +28,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'sainnhe/forest-night'
     Plug 'sainnhe/gruvbox-material'
     Plug 'arcticicestudio/nord-vim'
+    Plug 'joshdick/onedark.vim'
+    Plug 'NLKNguyen/papercolor-theme'
+    Plug 'sainnhe/sonokai'
 call plug#end()
 
 set guicursor=
@@ -49,6 +52,7 @@ set undofile
 set incsearch
 set autoread
 set noshowmode
+set shell=zsh
 
 " more space for displaying messages
 set cmdheight=2
@@ -75,11 +79,11 @@ nmap <leader>d :bd<CR>
 nmap <leader>w :w<CR>
 
 " nice line numbers
-augroup numbertoggle
-    autocmd!
-    autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-    autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
-augroup END
+" augroup numbertoggle
+"     autocmd!
+"     autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+"     autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+" augroup END
 
 " true color
 if exists('+termguicolors')
@@ -90,7 +94,8 @@ endif
 
 set background=dark
 let g:gruvbox_material_background = 'soft'
-colorscheme gruvbox-material
+let g:sonokai_style = 'andromeda'
+colorscheme onedark
 
 if executable('rg')
     let g:rg_derive_root='true'
@@ -99,9 +104,17 @@ endif
 let loaded_matchparen = 1
 
 " better netrw
-let g:netrw_liststyle = 3
-let g:netrw_banner = 0
-let g:netrw_winsize = 20
+" let g:netrw_liststyle = 3
+" let g:netrw_banner = 0
+" let g:netrw_winsize = 20
+
+" Disable netrw.
+let g:loaded_netrw = 1
+let g:loaded_netrwPlugin = 1
+
+" Vifm.
+let g:vifm_replace_netrw = 1
+let g:vifm_term = "term"
 
 " auto format rust files on save
 let g:rustfmt_autosave = 1
@@ -141,12 +154,15 @@ function! ChangeColorScheme(scheme) abort
 endfunction
 
 " switch colorscheme
-nnoremap <F1>  :call ChangeColorScheme("gruvbox-material")<CR>
-nnoremap <F2>  :call ChangeColorScheme("forest-night")<CR>
-nnoremap <F3>  :call ChangeColorScheme("nord")<CR>
+nnoremap <F1> :call ChangeColorScheme("gruvbox-material")<CR>
+nnoremap <F2> :call ChangeColorScheme("forest-night")<CR>
+nnoremap <F3> :call ChangeColorScheme("nord")<CR>
+nnoremap <F4> :call ChangeColorScheme("onedark")<CR>
+nnoremap <F5> :call ChangeColorScheme("PaperColor")<CR>
+nnoremap <F6> :call ChangeColorScheme("sonokai")<CR>
 
 let g:lightline = {
-  \   'colorscheme': 'gruvbox_material',
+  \   'colorscheme': 'onedark',
   \   'active': {
   \     'left': [
   \         [ 'mode', 'paste' ],
