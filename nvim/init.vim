@@ -6,6 +6,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'lotabout/skim.vim'
     Plug 'dense-analysis/ale'
     Plug 'itchyny/lightline.vim'
+    Plug 'maximbaz/lightline-ale'
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-surround'
     Plug 'tpope/vim-fugitive'
@@ -21,8 +22,10 @@ call plug#begin('~/.vim/plugged')
 
     " language support
     Plug 'rust-lang/rust.vim'
+    Plug 'ekalinin/Dockerfile.vim'
     Plug 'prettier/vim-prettier', { 'do': 'npm install' }
     Plug 'neoclide/coc.nvim', { 'branch': 'release' }
+    Plug 'lepture/vim-jinja'
 
     " color schemes
     Plug 'sainnhe/forest-night'
@@ -31,6 +34,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'joshdick/onedark.vim'
     Plug 'NLKNguyen/papercolor-theme'
     Plug 'sainnhe/sonokai'
+    Plug 'ghifarit53/tokyonight-vim'
 call plug#end()
 
 set guicursor=
@@ -61,7 +65,7 @@ set cmdheight=2
 set updatetime=300
 set shortmess+=c
 set signcolumn=yes
-set cursorline
+"set cursorline
 
 " sane split
 set splitright
@@ -160,6 +164,7 @@ nnoremap <F3> :call ChangeColorScheme("nord")<CR>
 nnoremap <F4> :call ChangeColorScheme("onedark")<CR>
 nnoremap <F5> :call ChangeColorScheme("PaperColor")<CR>
 nnoremap <F6> :call ChangeColorScheme("sonokai")<CR>
+nnoremap <F7> :call ChangeColorScheme("tokyonight")<CR>
 
 let g:lightline = {
   \   'colorscheme': 'onedark',
