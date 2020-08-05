@@ -7,6 +7,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'dense-analysis/ale'
     Plug 'itchyny/lightline.vim'
     Plug 'maximbaz/lightline-ale'
+    Plug 'junegunn/goyo.vim'
+    Plug 'junegunn/limelight.vim'
     Plug 'tpope/vim-repeat'
     Plug 'tpope/vim-surround'
     Plug 'tpope/vim-fugitive'
@@ -187,6 +189,19 @@ let g:lightline.separator = {
 let g:lightline.subseparator = {
   \   'left': '', 'right': '' 
 \}
+
+function! s:goyo_enter()
+    set wrap
+    Limelight
+endfunction
+
+function! s:goyo_leave()
+    set nowrap
+    Limelight!
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
 
 " coc config
 " Use tab for trigger completion with characters ahead and navigate.

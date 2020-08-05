@@ -94,7 +94,7 @@ font:
         #   - (macOS) Menlo
         #   - (Linux/BSD) monospace
         #   - (Windows) Consolas
-        family: JetBrains Mono
+        family: Agave
 
         # The `style` can be specified to pick a specific face.
         style: Regular
@@ -133,13 +133,13 @@ font:
         style: Regular
 
     # Point size
-    size: 16.0
+    size: 18
 
     # Offset is the extra space around each character. `offset.y` can be thought of
     # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
-    #offset:
+    offset:
     #  x: 0
-    #  y: 0
+       y: 0
     # Glyph offset determines the locations of the glyphs within their cells with
     # the default being at the bottom. Increasing `x` moves the glyph to the right,
     # increasing `y` moves the glyph upwards.
@@ -526,7 +526,7 @@ shell:
 #
 # If the same trigger is assigned to multiple actions, all of them are executed
 # at once.
-key_bindings:
+#key_bindings:
     # (Windows, Linux, and BSD only)
     #- { key: V,        mods: Control|Shift, action: Paste            }
     #- { key: C,        mods: Control|Shift, action: Copy             }
@@ -554,7 +554,7 @@ key_bindings:
     #- { key: Q,      mods: Command,         action: Quit             }
     #- { key: W,      mods: Command,         action: Quit             }
     #- { key: F,      mods: Command|Control, action: ToggleFullscreen }
-    - { key: N, mods: Command, action: SpawnNewInstance }
+    #- { key: N, mods: Command, action: SpawnNewInstance }
     #- { key: Paste,                    action: Paste                            }
     #- { key: Copy,                     action: Copy                             }
     #- { key: L,         mods: Control, action: ClearLogNotice                   }
