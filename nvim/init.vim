@@ -6,6 +6,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'lotabout/skim.vim'
     Plug 'dense-analysis/ale'
     Plug 'itchyny/lightline.vim'
+    Plug 'mengelbrecht/lightline-bufferline'
     Plug 'maximbaz/lightline-ale'
     Plug 'junegunn/goyo.vim'
     Plug 'junegunn/limelight.vim'
@@ -67,6 +68,7 @@ set cmdheight=2
 set updatetime=300
 set shortmess+=c
 set signcolumn=yes
+set showtabline=2
 "set cursorline
 
 " sane split
@@ -83,6 +85,9 @@ nmap <leader>d :bd<CR>
 
 " quick-save
 nmap <leader>w :w<CR>
+
+" terminal
+tnoremap <Esc> <C-\><C-n>
 
 " nice line numbers
 " augroup numbertoggle
@@ -168,6 +173,10 @@ nnoremap <F5> :call ChangeColorScheme("PaperColor")<CR>
 nnoremap <F6> :call ChangeColorScheme("sonokai")<CR>
 nnoremap <F7> :call ChangeColorScheme("tokyonight")<CR>
 
+let g:lightline#bufferline#show_number = 2
+let g:lightline#bufferline#unnamed = '[No Name]'
+let g:lightline#bufferline#number_separator = '⟩ '
+let g:lightline#bufferline#min_buffer_count = 1
 let g:lightline = {
   \   'colorscheme': 'onedark',
   \   'active': {
@@ -176,19 +185,22 @@ let g:lightline = {
   \         [ 'gitbranch', 'readonly', 'filename', 'modified' ]
   \     ]
   \   },
+  \   'tabline': {
+  \     'left': [['buffers']],
+  \   },
   \   'component': {
   \     'lineinfo': ' %3l:%-2v',
+  \   },
+  \   'component_expand': {
+  \     'buffers': 'lightline#bufferline#buffers'
+  \   },
+  \   'component_type': {
+  \     'buffers': 'tabsel'
   \   },
   \   'component_function': {
   \     'gitbranch': 'fugitive#head',
   \   }
 \ }
-let g:lightline.separator = {
-  \   'left': '', 'right': ''
-\}
-let g:lightline.subseparator = {
-  \   'left': '', 'right': '' 
-\}
 
 function! s:goyo_enter()
     set wrap
@@ -202,6 +214,18 @@ endfunction
 
 autocmd! User GoyoEnter nested call <SID>goyo_enter()
 autocmd! User GoyoLeave nested call <SID>goyo_leave()
+
+" bufferline
+nmap <Leader>1 <Plug>lightline#bufferline#go(1)
+nmap <Leader>2 <Plug>lightline#bufferline#go(2)
+nmap <Leader>3 <Plug>lightline#bufferline#go(3)
+nmap <Leader>4 <Plug>lightline#bufferline#go(4)
+nmap <Leader>5 <Plug>lightline#bufferline#go(5)
+nmap <Leader>6 <Plug>lightline#bufferline#go(6)
+nmap <Leader>7 <Plug>lightline#bufferline#go(7)
+nmap <Leader>8 <Plug>lightline#bufferline#go(8)
+nmap <Leader>9 <Plug>lightline#bufferline#go(9)
+nmap <Leader>0 <Plug>lightline#bufferline#go(10)
 
 " coc config
 " Use tab for trigger completion with characters ahead and navigate.
