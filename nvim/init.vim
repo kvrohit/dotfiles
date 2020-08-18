@@ -175,8 +175,8 @@ nnoremap <F7> :call ChangeColorScheme("tokyonight")<CR>
 
 let g:lightline#bufferline#show_number = 2
 let g:lightline#bufferline#unnamed = '[No Name]'
-let g:lightline#bufferline#number_separator = '⟩ '
-let g:lightline#bufferline#min_buffer_count = 1
+let g:lightline#bufferline#number_separator = '› '
+let g:lightline#bufferline#filename_modifier = ':t'
 let g:lightline = {
   \   'colorscheme': 'onedark',
   \   'active': {
@@ -201,6 +201,12 @@ let g:lightline = {
   \     'gitbranch': 'fugitive#head',
   \   }
 \ }
+let g:lightline.separator = {
+  \   'left': '', 'right': ''
+\}
+let g:lightline.subseparator = {
+  \   'left': '⋮', 'right': '⋮' 
+\}
 
 function! s:goyo_enter()
     set wrap
@@ -226,6 +232,10 @@ nmap <Leader>7 <Plug>lightline#bufferline#go(7)
 nmap <Leader>8 <Plug>lightline#bufferline#go(8)
 nmap <Leader>9 <Plug>lightline#bufferline#go(9)
 nmap <Leader>0 <Plug>lightline#bufferline#go(10)
+
+" let g:lightline#bufferline#composed_number_map = {
+" \ 1:  '𝟣', 2:  '𝟤', 3:  '𝟥', 4:  '𝟦', 5:  '𝟧',
+" \ 6:  '𝟨', 7:  '𝟩', 8:  '𝟪', 9:  '𝟫' }
 
 " coc config
 " Use tab for trigger completion with characters ahead and navigate.
