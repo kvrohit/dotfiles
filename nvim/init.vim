@@ -2,8 +2,9 @@
 call plug#begin('~/.vim/plugged')
     " enhancements
     Plug 'mhinz/vim-startify'
-    Plug 'lotabout/skim', { 'dir': '~/.skim', 'do': './install' }
-    Plug 'lotabout/skim.vim'
+    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+    Plug 'junegunn/fzf.vim'
+    Plug 'stsewd/fzf-checkout.vim'
     Plug 'dense-analysis/ale'
     Plug 'itchyny/lightline.vim'
     Plug 'mengelbrecht/lightline-bufferline'
@@ -29,6 +30,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'prettier/vim-prettier', { 'do': 'npm install' }
     Plug 'neoclide/coc.nvim', { 'branch': 'release' }
     Plug 'lepture/vim-jinja'
+    Plug 'elmcast/elm-vim'
 
     " color schemes
     Plug 'sainnhe/forest-night'
@@ -127,6 +129,9 @@ let g:loaded_netrwPlugin = 1
 let g:vifm_replace_netrw = 1
 let g:vifm_term = "term"
 
+" fzf
+let g:fzf_layout = {'window': {'width': 0.8, 'height': 0.8}}
+
 " auto format rust files on save
 let g:rustfmt_autosave = 1
 
@@ -187,15 +192,16 @@ let g:lightline = {
   \   },
   \   'tabline': {
   \     'left': [['buffers']],
+  \     'right': [['']],
   \   },
   \   'component': {
   \     'lineinfo': ' %3l:%-2v',
   \   },
   \   'component_expand': {
-  \     'buffers': 'lightline#bufferline#buffers'
+  \     'buffers': 'lightline#bufferline#buffers',
   \   },
   \   'component_type': {
-  \     'buffers': 'tabsel'
+  \     'buffers': 'tabsel',
   \   },
   \   'component_function': {
   \     'gitbranch': 'fugitive#head',
@@ -274,4 +280,3 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-
