@@ -187,7 +187,7 @@ let g:lightline = {
   \   'active': {
   \     'left': [
   \         [ 'mode', 'paste' ],
-  \         [ 'gitbranch', 'readonly', 'filename', 'modified' ]
+  \         [ 'gitbranch', 'readonly' ]
   \     ]
   \   },
   \   'tabline': {
@@ -204,7 +204,7 @@ let g:lightline = {
   \     'buffers': 'tabsel',
   \   },
   \   'component_function': {
-  \     'gitbranch': 'fugitive#head',
+  \     'gitbranch': 'GitBranch',
   \   }
 \ }
 let g:lightline.separator = {
@@ -213,6 +213,14 @@ let g:lightline.separator = {
 let g:lightline.subseparator = {
   \   'left': '⋮', 'right': '⋮' 
 \}
+
+function! GitBranch() abort
+    if fugitive#head() !=# ''
+        return "\uE0A0 ".fugitive#head()
+    else
+        return ""
+    endif
+endfunction
 
 function! s:goyo_enter()
     set wrap
