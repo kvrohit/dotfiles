@@ -5,10 +5,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
     Plug 'junegunn/fzf.vim'
     Plug 'stsewd/fzf-checkout.vim'
-    Plug 'dense-analysis/ale'
+    " Plug 'dense-analysis/ale'
     Plug 'itchyny/lightline.vim'
     Plug 'mengelbrecht/lightline-bufferline'
-    Plug 'maximbaz/lightline-ale'
     Plug 'junegunn/goyo.vim'
     Plug 'junegunn/limelight.vim'
     Plug 'tpope/vim-repeat'
@@ -24,22 +23,30 @@ call plug#begin('~/.vim/plugged')
     " vim-task
     Plug 'kvrohit/nvim-tasks'
 
-    " language support
+    " Collection of common configurations for the Nvim LSP client
+    Plug 'neovim/nvim-lspconfig'
+    " Extensions to built-in LSP, for example, providing type inlay hints
+    Plug 'tjdevries/lsp_extensions.nvim'
+    " Autocompletion framework for built-in LSP
+    Plug 'nvim-lua/completion-nvim'
+    " Diagnostic navigation and settings for built-in LSP
+    Plug 'nvim-lua/diagnostic-nvim'
+
+    " Language support
     Plug 'rust-lang/rust.vim'
     Plug 'ekalinin/Dockerfile.vim'
-    Plug 'prettier/vim-prettier', { 'do': 'npm install' }
-    Plug 'neoclide/coc.nvim', { 'branch': 'release' }
-    Plug 'lepture/vim-jinja'
-    Plug 'elmcast/elm-vim'
+    Plug 'ElmCast/elm-vim'
+
+    " snippets
+    Plug 'hrsh7th/vim-vsnip'
+    Plug 'hrsh7th/vim-vsnip-integ'
 
     " color schemes
-    Plug 'sainnhe/forest-night'
-    Plug 'sainnhe/gruvbox-material'
-    Plug 'arcticicestudio/nord-vim'
+    Plug 'gruvbox-community/gruvbox'
     Plug 'joshdick/onedark.vim'
-    Plug 'NLKNguyen/papercolor-theme'
-    Plug 'sainnhe/sonokai'
-    Plug 'ghifarit53/tokyonight-vim'
+    Plug 'cocopon/iceberg.vim'
+    Plug 'RohanPoojary/pleasant.vim'
+    Plug 'bluz71/vim-nightfly-guicolors'
 call plug#end()
 
 set guicursor=
@@ -63,15 +70,23 @@ set autoread
 set noshowmode
 set shell=zsh
 
-" more space for displaying messages
-set cmdheight=2
-
 " better user experience
-set updatetime=300
+set cmdheight=1
+set updatetime=1000
 set shortmess+=c
 set signcolumn=yes
 set showtabline=2
-"set cursorline
+set cursorline
+set completeopt-=preview
+set scrolloff=10
+
+" Global clipboard
+set clipboard+=unnamedplus
+
+" Make it so that long lines wrap smartly
+set breakindent
+let &showbreak=repeat(' ', 3)
+set linebreak
 
 " sane split
 set splitright
@@ -89,14 +104,7 @@ nmap <leader>d :bd<CR>
 nmap <leader>w :w<CR>
 
 " terminal
-tnoremap <Esc> <C-\><C-n>
-
-" nice line numbers
-" augroup numbertoggle
-"     autocmd!
-"     autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-"     autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
-" augroup END
+tnoremap <expr> <Esc> (&filetype == "fzf") ? "<Esc>" : "<c-\><c-n>"
 
 " true color
 if exists('+termguicolors')
@@ -106,9 +114,8 @@ if exists('+termguicolors')
 endif
 
 set background=dark
-let g:gruvbox_material_background = 'soft'
-let g:sonokai_style = 'andromeda'
-colorscheme onedark
+let g:gruvbox_contrast_dark = 'soft'
+colorscheme pleasant
 
 if executable('rg')
     let g:rg_derive_root='true'
@@ -148,21 +155,15 @@ nnoremap <leader>l :wincmd l<CR>
 nnoremap <F12> :Vifm<CR>
 
 " clipboard
-noremap <leader>yy "*y
-noremap <leader>pp "*p
+" noremap <leader>yy "*y
+" noremap <leader>pp "*p
 
 " tasks
 nnoremap <leader>tt :ToggleTask<CR>
 nnoremap <leader>td :UndoTask<CR>
 
 function! ChangeColorScheme(scheme) abort
-    let l:color = a:scheme
-    if (a:scheme == "forest-night")
-        let l:color = "forest_night"
-    elseif (a:scheme == "gruvbox-material")
-        let l:color = "gruvbox_material"
-    endif
-    let g:lightline.colorscheme = l:color
+    let g:lightline.colorscheme = a:scheme
     execute "colorscheme " . a:scheme
     call lightline#init()
     call lightline#colorscheme()
@@ -170,20 +171,18 @@ function! ChangeColorScheme(scheme) abort
 endfunction
 
 " switch colorscheme
-nnoremap <F1> :call ChangeColorScheme("gruvbox-material")<CR>
-nnoremap <F2> :call ChangeColorScheme("forest-night")<CR>
-nnoremap <F3> :call ChangeColorScheme("nord")<CR>
-nnoremap <F4> :call ChangeColorScheme("onedark")<CR>
-nnoremap <F5> :call ChangeColorScheme("PaperColor")<CR>
-nnoremap <F6> :call ChangeColorScheme("sonokai")<CR>
-nnoremap <F7> :call ChangeColorScheme("tokyonight")<CR>
+nnoremap <F1> :call ChangeColorScheme("gruvbox")<CR>
+nnoremap <F2> :call ChangeColorScheme("pleasant")<CR>
+nnoremap <F3> :call ChangeColorScheme("onedark")<CR>
+nnoremap <F4> :call ChangeColorScheme("iceberg")<CR>
+nnoremap <F5> :call ChangeColorScheme("nightfly")<CR>
 
 let g:lightline#bufferline#show_number = 2
 let g:lightline#bufferline#unnamed = '[No Name]'
 let g:lightline#bufferline#number_separator = '› '
 let g:lightline#bufferline#filename_modifier = ':t'
 let g:lightline = {
-  \   'colorscheme': 'onedark',
+  \   'colorscheme': 'pleasant',
   \   'active': {
   \     'left': [
   \         [ 'mode', 'paste' ],
@@ -247,44 +246,57 @@ nmap <Leader>8 <Plug>lightline#bufferline#go(8)
 nmap <Leader>9 <Plug>lightline#bufferline#go(9)
 nmap <Leader>0 <Plug>lightline#bufferline#go(10)
 
-" let g:lightline#bufferline#composed_number_map = {
-" \ 1:  '𝟣', 2:  '𝟤', 3:  '𝟥', 4:  '𝟦', 5:  '𝟧',
-" \ 6:  '𝟨', 7:  '𝟩', 8:  '𝟪', 9:  '𝟫' }
-
-" coc config
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
+" completion-nvim
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<Tab>"   : completion#trigger_completion()
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : <SID>check_back_space() ? "\<S-Tab>" : completion#trigger_completion()
 function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+    let col = col('.') - 1
+    return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
 
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+" Code navigation shortcuts
+" nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+" nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+" nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
+" nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+" nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
+" nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+" nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
+" nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+" nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
+" nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
 
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-" position. Coc only does snippet and additional edit on confirm.
-" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
-if exists('*complete_info')
-  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-else
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-endif
+" Visualize diagnostics
+let g:diagnostic_enable_virtual_text = 1
+let g:diagnostic_trimmed_virtual_text = '100'
+" Don't show diagnostics while in insert mode
+let g:diagnostic_insert_delay = 1
 
-" Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+" Show diagnostic popup on cursor hold
+autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()
 
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
+" Goto previous/next diagnostic warning/error
+nnoremap <silent> g[ <cmd>PrevDiagnosticCycle<cr>
+nnoremap <silent> g] <cmd>NextDiagnosticCycle<cr>
+
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
+
+" Avoid showing message extra message when using completion
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+let g:completion_trigger_keyword_length = 3
+
+lua << EOF
+local nvim_lsp = require'nvim_lsp'
+
+local on_attach = function(client)
+    require'completion'.on_attach(client)
+    require'diagnostic'.on_attach(client)
+end
+
+nvim_lsp.vimls.setup({ on_attach=on_attach })
+nvim_lsp.yamlls.setup({ on_attach=on_attach })
+nvim_lsp.elmls.setup({ on_attach=on_attach })
+nvim_lsp.bashls.setup({ on_attach=on_attach })
+EOF
