@@ -1,52 +1,48 @@
 " plugins
 call plug#begin('~/.vim/plugged')
-    " enhancements
-    Plug 'mhinz/vim-startify'
-    Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-    Plug 'junegunn/fzf.vim'
-    Plug 'stsewd/fzf-checkout.vim'
-    " Plug 'dense-analysis/ale'
-    Plug 'itchyny/lightline.vim'
-    Plug 'mengelbrecht/lightline-bufferline'
-    Plug 'junegunn/goyo.vim'
-    Plug 'junegunn/limelight.vim'
-    Plug 'tpope/vim-repeat'
-    Plug 'tpope/vim-surround'
-    Plug 'tpope/vim-fugitive'
-    Plug 'tpope/vim-commentary'
-        map  gc  <Plug>Commentary
-        nmap gcc <Plug>CommentaryLine
+" enhancements
+Plug 'mhinz/vim-startify'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'stsewd/fzf-checkout.vim'
+Plug 'dense-analysis/ale'
+Plug 'prettier/vim-prettier', { 'do': 'pnpm install' }
+"Plug 'itchyny/lightline.vim'
+Plug 'glepnir/galaxyline.nvim'
+Plug 'romgrk/barbar.nvim'
+Plug 'numtostr/FTerm.nvim'
+Plug 'norcalli/nvim-colorizer.lua'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-commentary'
+    map  gc  <Plug>Commentary
+    nmap gcc <Plug>CommentaryLine
 
-    " vifm
-    Plug 'vifm/vifm.vim'
+" vim-task
+Plug 'kvrohit/nvim-tasks'
 
-    " vim-task
-    Plug 'kvrohit/nvim-tasks'
+" lsp
+Plug 'neovim/nvim-lsp'
+" completion
+Plug 'nvim-lua/completion-nvim'
+" treesitter
+Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/completion-treesitter'
 
-    " Collection of common configurations for the Nvim LSP client
-    Plug 'neovim/nvim-lspconfig'
-    " Extensions to built-in LSP, for example, providing type inlay hints
-    Plug 'tjdevries/lsp_extensions.nvim'
-    " Autocompletion framework for built-in LSP
-    Plug 'nvim-lua/completion-nvim'
-    " Diagnostic navigation and settings for built-in LSP
-    Plug 'nvim-lua/diagnostic-nvim'
+" language support
+Plug 'rust-lang/rust.vim'
+Plug 'ekalinin/Dockerfile.vim'
+Plug 'ElmCast/elm-vim'
 
-    " Language support
-    Plug 'rust-lang/rust.vim'
-    Plug 'ekalinin/Dockerfile.vim'
-    Plug 'ElmCast/elm-vim'
-
-    " snippets
-    Plug 'hrsh7th/vim-vsnip'
-    Plug 'hrsh7th/vim-vsnip-integ'
-
-    " color schemes
-    Plug 'gruvbox-community/gruvbox'
-    Plug 'joshdick/onedark.vim'
-    Plug 'cocopon/iceberg.vim'
-    Plug 'RohanPoojary/pleasant.vim'
-    Plug 'bluz71/vim-nightfly-guicolors'
+" color schemes
+Plug 'lifepillar/vim-gruvbox8'
+Plug 'joshdick/onedark.vim'
+Plug 'cocopon/iceberg.vim'
+Plug 'RohanPoojary/pleasant.vim'
+Plug 'bluz71/vim-nightfly-guicolors'
+Plug 'ayu-theme/ayu-vim'
+Plug 'glepnir/zephyr-nvim'
 call plug#end()
 
 set guicursor=
@@ -80,10 +76,10 @@ set cursorline
 set completeopt-=preview
 set scrolloff=10
 
-" Global clipboard
+" global clipboard
 set clipboard+=unnamedplus
 
-" Make it so that long lines wrap smartly
+" make it so that long lines wrap smartly
 set breakindent
 let &showbreak=repeat(' ', 3)
 set linebreak
@@ -105,6 +101,8 @@ nmap <leader>w :w<CR>
 
 " terminal
 tnoremap <expr> <Esc> (&filetype == "fzf") ? "<Esc>" : "<c-\><c-n>"
+au TermOpen * setlocal nonu nornu
+nnoremap <leader>i :FTermToggle<CR>
 
 " true color
 if exists('+termguicolors')
@@ -114,8 +112,10 @@ if exists('+termguicolors')
 endif
 
 set background=dark
-let g:gruvbox_contrast_dark = 'soft'
-colorscheme pleasant
+let ayucolor="mirage"
+colorscheme zephyr
+
+au! BufNewFile,BufRead *.svelte set ft=html
 
 if executable('rg')
     let g:rg_derive_root='true'
@@ -124,19 +124,13 @@ endif
 let loaded_matchparen = 1
 
 " better netrw
-" let g:netrw_liststyle = 3
-" let g:netrw_banner = 0
-" let g:netrw_winsize = 20
-
-" Disable netrw.
-let g:loaded_netrw = 1
-let g:loaded_netrwPlugin = 1
-
-" Vifm.
-let g:vifm_replace_netrw = 1
-let g:vifm_term = "term"
+let g:netrw_liststyle = 3
+let g:netrw_banner = 0
+let g:netrw_winsize = 20
 
 " fzf
+let $FZF_DEFAULT_OPTS = '--color=dark --reverse --keep-right --marker=+ --ansi'
+let $FZF_DEFAULT_COMMAND = 'fd --type f --type l --hidden --follow --color=always --exclude .git --exclude node_modules || git ls-files --cached --others --exclude-standard'
 let g:fzf_layout = {'window': {'width': 0.8, 'height': 0.8}}
 
 " auto format rust files on save
@@ -171,18 +165,15 @@ function! ChangeColorScheme(scheme) abort
 endfunction
 
 " switch colorscheme
-nnoremap <F1> :call ChangeColorScheme("gruvbox")<CR>
+nnoremap <F1> :call ChangeColorScheme("gruvbox8")<CR>
 nnoremap <F2> :call ChangeColorScheme("pleasant")<CR>
 nnoremap <F3> :call ChangeColorScheme("onedark")<CR>
 nnoremap <F4> :call ChangeColorScheme("iceberg")<CR>
 nnoremap <F5> :call ChangeColorScheme("nightfly")<CR>
+nnoremap <F6> :call ChangeColorScheme("ayu")<CR>
 
-let g:lightline#bufferline#show_number = 2
-let g:lightline#bufferline#unnamed = '[No Name]'
-let g:lightline#bufferline#number_separator = '› '
-let g:lightline#bufferline#filename_modifier = ':t'
 let g:lightline = {
-  \   'colorscheme': 'pleasant',
+  \   'colorscheme': 'ayu',
   \   'active': {
   \     'left': [
   \         [ 'mode', 'paste' ],
@@ -221,82 +212,197 @@ function! GitBranch() abort
     endif
 endfunction
 
-function! s:goyo_enter()
-    set wrap
-    Limelight
-endfunction
-
-function! s:goyo_leave()
-    set nowrap
-    Limelight!
-endfunction
-
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
-
-" bufferline
-nmap <Leader>1 <Plug>lightline#bufferline#go(1)
-nmap <Leader>2 <Plug>lightline#bufferline#go(2)
-nmap <Leader>3 <Plug>lightline#bufferline#go(3)
-nmap <Leader>4 <Plug>lightline#bufferline#go(4)
-nmap <Leader>5 <Plug>lightline#bufferline#go(5)
-nmap <Leader>6 <Plug>lightline#bufferline#go(6)
-nmap <Leader>7 <Plug>lightline#bufferline#go(7)
-nmap <Leader>8 <Plug>lightline#bufferline#go(8)
-nmap <Leader>9 <Plug>lightline#bufferline#go(9)
-nmap <Leader>0 <Plug>lightline#bufferline#go(10)
-
 " completion-nvim
-" Use <Tab> and <S-Tab> to navigate through popup menu
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<Tab>"   : completion#trigger_completion()
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : <SID>check_back_space() ? "\<S-Tab>" : completion#trigger_completion()
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
+" use <tab> and <s-tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-" Code navigation shortcuts
-" nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
-" nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
-" nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<CR>
-" nnoremap <silent> <c-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-" nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<CR>
-" nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
-" nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
-" nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-" nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<CR>
-" nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<CR>
-
-" Visualize diagnostics
-let g:diagnostic_enable_virtual_text = 1
-let g:diagnostic_trimmed_virtual_text = '100'
-" Don't show diagnostics while in insert mode
-let g:diagnostic_insert_delay = 1
-
-" Show diagnostic popup on cursor hold
-autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()
-
-" Goto previous/next diagnostic warning/error
-nnoremap <silent> g[ <cmd>PrevDiagnosticCycle<cr>
-nnoremap <silent> g] <cmd>NextDiagnosticCycle<cr>
-
-" Set completeopt to have a better completion experience
+" set completeopt to have a better completion experience
 set completeopt=menuone,noinsert,noselect
 
-" Avoid showing message extra message when using completion
+" avoid showing message extra message when using completion
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
 let g:completion_trigger_keyword_length = 3
 
 lua << EOF
-local nvim_lsp = require'nvim_lsp'
+require'nvim-treesitter.configs'.setup {
+    ensure_installed = "all",
+    highlight = {
+        enable = true,
+        disable = { "svelte" },
+    },
+}
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics, {
+        virtual_text = false,
+        signs = true,
+        update_in_insert = false,
+    }
+)
 
-local on_attach = function(client)
-    require'completion'.on_attach(client)
-    require'diagnostic'.on_attach(client)
-end
+local lsp = require'lspconfig'
+lsp.bashls.setup({})
+lsp.vimls.setup({})
+lsp.elmls.setup({})
+lsp.jsonls.setup({})
+lsp.yamlls.setup({})
+lsp.html.setup({})
+lsp.cssls.setup({})
+require'colorizer'.setup {
+    css = { css = true; }
+}
 
-nvim_lsp.vimls.setup({ on_attach=on_attach })
-nvim_lsp.yamlls.setup({ on_attach=on_attach })
-nvim_lsp.elmls.setup({ on_attach=on_attach })
-nvim_lsp.bashls.setup({ on_attach=on_attach })
+local gl = require('galaxyline')
+local gls = gl.section
+local glf = require('galaxyline.provider_fileinfo')
+local glb = require('galaxyline.provider_buffer')
+
+local colors = {
+  bg = '#282c34',
+  line_bg = '#353644',
+  fg = '#dddddd',
+  fg_green = '#65a380',
+
+  yellow = '#fabd2f',
+  cyan = '#008080',
+  darkblue = '#081633',
+  green = '#afd700',
+  orange = '#FF8800',
+  purple = '#5d4d7a',
+  magenta = '#c678dd',
+  blue = '#51afef';
+  red = '#ec5f67'
+}
+
+gls.left[1] = {
+  FirstElement = {
+    provider = function() return ' ' end,
+    highlight = {colors.line_bg,colors.blue}
+  },
+}
+gls.left[2] = {
+  ViMode = {
+    provider = function()
+      local alias = {n = 'N',i = 'I',c= 'C',V= 'V', [''] = 'V'}
+      return alias[vim.fn.mode()] .. ' '
+    end,
+    separator = ' ',
+    separator_highlight = {colors.blue,colors.bg},
+    highlight = {colors.darkblue,colors.blue,'bold'},
+  },
+}
+gls.left[3] = {
+  FileName = {
+    provider = {'FileName'},
+    condition = buffer_not_empty,
+    separator = '',
+    separator_highlight = {colors.bg,colors.line_bg},
+    highlight = {colors.fg,colors.bg}
+  }
+}
+gls.right[1]= {
+  FileFormat = {
+    provider = function()
+        return ' ' .. glf.get_file_format()
+    end,
+    separator = '',
+    separator_highlight = {colors.bg,colors.line_bg},
+    highlight = {colors.fg,colors.bg},
+  }
+}
+gls.right[2] = {
+  BufferType = {
+    provider = function()
+        return glb.get_buffer_filetype():lower()
+    end,
+    separator = ' ⋮ ',
+    separator_highlight = {colors.blue,colors.bg},
+    highlight = {colors.fg,colors.bg}
+  }
+}
+gls.right[3] = {
+  LineInfo = {
+    provider = 'LineColumn',
+    separator = ' ⋮ ',
+    separator_highlight = {colors.blue,colors.bg},
+    highlight = {colors.fg,colors.bg}
+  },
+}
+gls.right[4] = {
+  PerCent = {
+    provider = 'LinePercent',
+    separator = ' ',
+    separator_highlight = {colors.blue,colors.bg},
+    highlight = {colors.darkblue,colors.blue,'bold'},
+  }
+}
+gls.right[5] = {
+  LastElement = {
+    provider = function() return '' end,
+    highlight = {colors.line_bg,colors.blue}
+  },
+}
 EOF
+
+" lsp mappings
+nnoremap <silent> gd    <cmd>lua vim.lsp.buf.declaration()<cr>
+"nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<cr>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<cr>
+nnoremap <silent> J     <cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<cr>
+nnoremap <silent> gD    <cmd>lua vim.lsp.buf.implementation()<cr>
+nnoremap <silent> 1gD   <cmd>lua vim.lsp.buf.type_definition()<cr>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<cr>
+nnoremap <silent> gn    <cmd>lua vim.lsp.buf.rename()<cr>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<cr>
+nnoremap <silent> gW    <cmd>lua vim.lsp.buf.workspace_symbol()<cr>
+nnoremap <silent> ga    <cmd>lua vim.lsp.buf.code_action()<cr>
+vnoremap <silent> ga    <cmd>'<,'>lua vim.lsp.buf.range_code_action()<cr>
+
+" goto previous/next diagnostic warning/error
+nnoremap <silent> g[ <cmd>lua vim.lsp.diagnostic.goto_prev()<cr>
+nnoremap <silent> g] <cmd>lua vim.lsp.diagnostic.goto_next()<cr>
+
+" use completion-nvim in every buffer
+autocmd BufEnter * lua require'completion'.on_attach()
+
+" ale
+let g:ale_linter_aliases = {'svelte': ['css', 'javascript']}
+let g:ale_linters = {'svelte': ['stylelint', 'eslint']}
+let g:ale_fixers = {
+\   'html': ['prettier'],
+\   'svelte': ['prettier', 'eslint'],
+\}
+
+" barbar
+" magic buffer-picking mode
+nnoremap <silent> <C-s> :BufferPick<CR>
+" sort automatically by...
+" nnoremap <silent> <Space>bd :BufferOrderByDirectory<CR>
+" nnoremap <silent> <Space>bl :BufferOrderByLanguage<CR>
+" " move to previous/next
+nnoremap <silent> <leader>bp :BufferPrevious<CR>
+nnoremap <silent> <leader>bn :BufferNext<CR>
+" re-order to previous/next
+" nnoremap <silent>    <A-<> :BufferMovePrevious<CR>
+" nnoremap <silent>    <A->> :BufferMoveNext<CR>
+" goto buffer in position...
+nnoremap <silent> <leader>1 :BufferGoto 1<CR>
+nnoremap <silent> <leader>2 :BufferGoto 2<CR>
+nnoremap <silent> <leader>3 :BufferGoto 3<CR>
+nnoremap <silent> <leader>4 :BufferGoto 4<CR>
+nnoremap <silent> <leader>5 :BufferGoto 5<CR>
+nnoremap <silent> <leader>6 :BufferGoto 6<CR>
+nnoremap <silent> <leader>7 :BufferGoto 7<CR>
+nnoremap <silent> <leader>8 :BufferGoto 8<CR>
+nnoremap <silent> <leader>9 :BufferLast<CR>
+" close buffer
+nnoremap <silent> <leader>bd :BufferClose<CR>
+let bufferline = {}
+let bufferline.animation = v:false
+let bufferline.icons = 'numbers'
+let bufferline.closable = v:false
+let bufferline.clickable = v:false
+let bufferline.semantic_letters = v:true
+let bufferline.letters =
+  \ 'asdfjkl;ghnmxcbziowerutyqpASDFJKLGHNMXCBZIOWERUTYQP'
+let bufferline.maximum_padding = 999
