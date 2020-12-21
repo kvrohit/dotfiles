@@ -9,7 +9,10 @@ vim.api.nvim_set_keymap('n', '<Leader>w', ':w<CR>', opts)
 
 -- vim-commentary
 vim.api.nvim_set_keymap('', 'gc', ':Commentary<CR>', opts)
---vim.api.nvim_set_keymap('n', 'gcc', '<Plug>CommentaryLine', opts)
+
+-- nvim-tasks
+vim.api.nvim_set_keymap('n', '<Leader>tt', ':ToggleTask<CR>', opts)
+vim.api.nvim_set_keymap('n', '<Leader>td', ':UndoTask<CR>', opts)
 
 -- auto commands
 vim.cmd('autocmd BufWritePost plugins.lua PackerCompile')
