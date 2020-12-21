@@ -12,11 +12,15 @@ vim.o.sidescrolloff = 5
 vim.o.completeopt = 'menuone,noinsert,noselect'
 vim.o.shortmess = vim.o.shortmess .. 'c'
 vim.o.showmode = false
+vim.o.undofile = true
+vim.o.swapfile = false
+vim.o.backup = false
 
 vim.wo.number = true
 vim.wo.relativenumber = true
 vim.wo.signcolumn = 'number'
 vim.wo.wrap = false
+vim.wo.cursorline = true
 
 vim.o.tabstop = 4
 vim.bo.tabstop = 4

@@ -14,4 +14,10 @@ return require('packer').startup(function()
 
     -- enhancements
     use 'nvim-treesitter/nvim-treesitter'
+
+    -- essentials
+    use 'tpope/vim-repeat'
+    use 'tpope/vim-surround'
+    use 'tpope/vim-fugitive'
+    use 'tpope/vim-commentary'
 end)
