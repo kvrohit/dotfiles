@@ -1,33 +1,34 @@
-vim.cmd [[packadd packer.nvim]]
+vim.cmd [[packadd paq-nvim]]
 
-return require('packer').startup(function()
-    -- packer
-    use {'wbthomason/packer.nvim', opt = true}
-    
-    -- color schemes
-    use 'ulwlu/elly.vim'
-    use 'sainnhe/edge'
-    use 'pineapplegiant/spaceduck'
-    
-    -- fzf
-    use 'junegunn/fzf'
-    use 'junegunn/fzf.vim'
+local paq = require('paq-nvim').paq
 
-    -- enhancements
-    use 'nvim-treesitter/nvim-treesitter'
-    use 'nvim-lua/plenary.nvim'
-    use 'tjdevries/express_line.nvim'
+-- paq
+paq {'savq/paq-nvim', opt = true}
 
-    -- essentials
-    use 'tpope/vim-repeat'
-    use 'tpope/vim-surround'
-    use 'tpope/vim-fugitive'
-    use 'tpope/vim-commentary'
-    use 'kvrohit/nvim-tasks'
+-- color schemes
+paq {'ulwlu/elly.vim'}
+paq 'sainnhe/edge'
+paq 'pineapplegiant/spaceduck'
 
-    -- additional filetype support
-    use 'evanleck/vim-svelte'
+-- fzf
+paq {'junegunn/fzf', hook = vim.fn['fzf#install']}
+paq 'junegunn/fzf.vim'
 
-    -- linting
-    use 'dense-analysis/ale'
-end)
+-- enhancements
+paq 'nvim-treesitter/nvim-treesitter'
+paq {'neovim/nvim-lspconfig'}
+paq 'nvim-lua/plenary.nvim'
+paq 'tjdevries/express_line.nvim'
+
+-- essentials
+paq 'tpope/vim-repeat'
+paq 'tpope/vim-surround'
+paq 'tpope/vim-fugitive'
+paq 'tpope/vim-commentary'
+paq 'kvrohit/nvim-tasks'
+
+-- additional filetype support
+paq 'evanleck/vim-svelte'
+
+-- linting
+paq 'dense-analysis/ale'
