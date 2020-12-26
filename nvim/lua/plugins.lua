@@ -5,8 +5,9 @@ return require('packer').startup(function()
     use {'wbthomason/packer.nvim', opt = true}
     
     -- color schemes
-    use 'glepnir/zephyr-nvim'
     use 'ulwlu/elly.vim'
+    use 'sainnhe/edge'
+    use 'pineapplegiant/spaceduck'
     
     -- fzf
     use 'junegunn/fzf'
@@ -23,4 +24,10 @@ return require('packer').startup(function()
     use 'tpope/vim-fugitive'
     use 'tpope/vim-commentary'
     use 'kvrohit/nvim-tasks'
+
+    -- additional filetype support
+    use 'evanleck/vim-svelte'
+
+    -- linting
+    use 'dense-analysis/ale'
 end)

@@ -6,6 +6,8 @@ vim.api.nvim_set_keymap('n', '<Leader>;', ':Buffers<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>d', ':bd<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>n', ':bn<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>w', ':w<CR>', opts)
+vim.api.nvim_set_keymap('n', '<Leader>y', '"+yy', opts)
+vim.api.nvim_set_keymap('n', '<Leader>p', '"+p', opts)
 
 -- vim-commentary
 vim.api.nvim_set_keymap('', 'gc', ':Commentary<CR>', opts)

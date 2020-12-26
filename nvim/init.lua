@@ -1,7 +1,7 @@
 require ('plugins')
 require ('options')
 
-vim.cmd('colorscheme elly')
+vim.cmd('colorscheme edge')
 
 require ('express_line')
 require ('keymaps')
