@@ -47,4 +47,4 @@ vim.env.FZF_DEFAULT_OPTS = '--color=dark --reverse --keep-right --marker=+'
 vim.env.FZF_DEFAULT_COMMAND = 'fd --type f --type l --hidden --follow --exclude .git --exclude node_modules || git ls-files --cached --others --exculde-standard'
 
 -- bat
-vim.env.BAT_THEME = 'gruvbox'
+vim.env.BAT_THEME = 'TwoDark'
