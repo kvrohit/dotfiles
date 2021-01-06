@@ -1,13 +1,17 @@
 local opts = {noremap = true, silent = true}
 
--- normal mode re-map
-vim.api.nvim_set_keymap('n', '<C-p>', ':Files<CR>', opts)
-vim.api.nvim_set_keymap('n', '<Leader>;', ':Buffers<CR>', opts)
+-- general
 vim.api.nvim_set_keymap('n', '<Leader>d', ':bd<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>n', ':bn<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>w', ':w<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>y', '"+y', opts)
 vim.api.nvim_set_keymap('n', '<Leader>p', '"+p', opts)
+vim.api.nvim_set_keymap('t', '<Esc>', '<C-\\><C-n>', opts)
+
+-- telescope
+vim.api.nvim_set_keymap('n', '<Leader>ff', ':Telescope find_files<CR>', opts)
+vim.api.nvim_set_keymap('n', '<Leader>fb', ':Telescope buffers<CR>', opts)
+vim.api.nvim_set_keymap('n', '<Leader>fg', ':Telescope live_grep<CR>', opts)
 
 -- vim-commentary
 vim.api.nvim_set_keymap('', 'gc', ':Commentary<CR>', opts)

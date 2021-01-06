@@ -6,19 +6,16 @@ local paq = require('paq-nvim').paq
 paq {'savq/paq-nvim', opt = true}
 
 -- color schemes
-paq {'ulwlu/elly.vim'}
 paq 'sainnhe/edge'
-paq 'pineapplegiant/spaceduck'
-
--- fzf
-paq {'junegunn/fzf', hook = vim.fn['fzf#install']}
-paq 'junegunn/fzf.vim'
+paq 'sainnhe/sonokai'
 
 -- enhancements
-paq 'nvim-treesitter/nvim-treesitter'
+paq {'nvim-treesitter/nvim-treesitter'}
 paq {'neovim/nvim-lspconfig'}
-paq 'nvim-lua/plenary.nvim'
-paq 'tjdevries/express_line.nvim'
+paq {'nvim-lua/popup.nvim'}
+paq {'nvim-lua/plenary.nvim'}
+paq {'nvim-telescope/telescope.nvim'}
+paq {'tjdevries/express_line.nvim'}
 
 -- essentials
 paq 'tpope/vim-repeat'

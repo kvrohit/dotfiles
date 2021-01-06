@@ -41,10 +41,3 @@ vim.wo.list = true
 vim.o.listchars = 'tab:┆·,trail:·,precedes:,extends:'
 
 vim.g.termbufm_direction_cmd = 'new'
-
--- fzf
-vim.env.FZF_DEFAULT_OPTS = '--color=dark --reverse --keep-right --marker=+'
-vim.env.FZF_DEFAULT_COMMAND = 'fd --type f --type l --hidden --follow --exclude .git --exclude node_modules || git ls-files --cached --others --exculde-standard'
-
--- bat
-vim.env.BAT_THEME = 'TwoDark'
