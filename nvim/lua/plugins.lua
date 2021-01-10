@@ -1,31 +1,31 @@
-vim.cmd [[packadd paq-nvim]]
+vim.cmd [[packadd packer.nvim]]
 
-local paq = require('paq-nvim').paq
+return require('packer').startup(function()
+    -- packer
+    use {'wbthomason/packer.nvim', opt = true}
 
--- paq
-paq {'savq/paq-nvim', opt = true}
+    -- color schemes
+    use 'sainnhe/edge'
+    use 'sainnhe/sonokai'
 
--- color schemes
-paq 'sainnhe/edge'
-paq 'sainnhe/sonokai'
+    -- enhancements
+    use {'nvim-treesitter/nvim-treesitter'}
+    use {'neovim/nvim-lspconfig'}
+    use {'nvim-lua/popup.nvim'}
+    use {'nvim-lua/plenary.nvim'}
+    use {'nvim-telescope/telescope.nvim'}
+    use {'tjdevries/express_line.nvim'}
 
--- enhancements
-paq {'nvim-treesitter/nvim-treesitter'}
-paq {'neovim/nvim-lspconfig'}
-paq {'nvim-lua/popup.nvim'}
-paq {'nvim-lua/plenary.nvim'}
-paq {'nvim-telescope/telescope.nvim'}
-paq {'tjdevries/express_line.nvim'}
+    -- essentials
+    use 'tpope/vim-repeat'
+    use 'tpope/vim-surround'
+    use 'tpope/vim-fugitive'
+    use 'tpope/vim-commentary'
+    use 'kvrohit/nvim-tasks'
 
--- essentials
-paq 'tpope/vim-repeat'
-paq 'tpope/vim-surround'
-paq 'tpope/vim-fugitive'
-paq 'tpope/vim-commentary'
-paq 'kvrohit/nvim-tasks'
+    -- additional filetype support
+    use 'evanleck/vim-svelte'
 
--- additional filetype support
-paq 'evanleck/vim-svelte'
-
--- linting
-paq 'dense-analysis/ale'
+    -- linting
+    use 'dense-analysis/ale'
+end)
