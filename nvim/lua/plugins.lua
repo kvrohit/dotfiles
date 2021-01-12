@@ -14,7 +14,8 @@ return require('packer').startup(function()
     use {'nvim-lua/popup.nvim'}
     use {'nvim-lua/plenary.nvim'}
     use {'nvim-telescope/telescope.nvim'}
-    use {'tjdevries/express_line.nvim'}
+    -- use {'tjdevries/express_line.nvim'}
+    use {'hoob3rt/lualine.nvim'}
 
     -- essentials
     use 'tpope/vim-repeat'

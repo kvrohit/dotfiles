@@ -3,7 +3,7 @@ require ('options')
 
 vim.cmd('colorscheme sonokai')
 
-require ('express_line')
+require ('statusline')
 require ('treesitter')
 require ('lsp')
 require ('keymaps')
