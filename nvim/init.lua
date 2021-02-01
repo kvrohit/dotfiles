@@ -1,9 +1,10 @@
-require ('plugins')
-require ('options')
+require('plugins')
+require('options')
 
 vim.cmd('colorscheme sonokai')
 
-require ('statusline')
-require ('treesitter')
-require ('lsp')
-require ('keymaps')
+require('statusline')
+require('treesitter')
+require('lsp')
+require('completion')
+require('keymaps')

@@ -11,10 +11,10 @@ return require('packer').startup(function()
     -- enhancements
     use {'nvim-treesitter/nvim-treesitter'}
     use {'neovim/nvim-lspconfig'}
+    use {'hrsh7th/nvim-compe'}
     use {'nvim-lua/popup.nvim'}
     use {'nvim-lua/plenary.nvim'}
     use {'nvim-telescope/telescope.nvim'}
-    -- use {'tjdevries/express_line.nvim'}
     use {'hoob3rt/lualine.nvim'}
 
     -- essentials

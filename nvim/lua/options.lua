@@ -28,6 +28,7 @@ vim.o.softtabstop = 4
 vim.bo.softtabstop = 4
 vim.o.shiftwidth = 4
 vim.bo.shiftwidth = 4
+vim.o.shiftround = true
 vim.o.autoindent = true
 vim.bo.autoindent = true
 vim.o.expandtab = true
@@ -41,3 +42,7 @@ vim.wo.list = true
 vim.o.listchars = 'tab:┆·,trail:·,precedes:,extends:'
 
 vim.g.termbufm_direction_cmd = 'new'
+vim.g.ale_linters_explicit = 1
+vim.g.ale_linters = {
+    sh = {'shellcheck'}
+}
