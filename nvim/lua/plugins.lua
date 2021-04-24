@@ -24,11 +24,12 @@ return packer.startup(function()
     use {'nvim-lua/popup.nvim'}
     use {'nvim-lua/plenary.nvim'}
     use {'nvim-telescope/telescope.nvim'}
-    use {'hoob3rt/lualine.nvim', config = function() require('lualine').setup {options={theme='gruvbox_material',icons_enabled=false}} end}
+    use {'famiu/feline.nvim'}
     use {'voldikss/vim-floaterm'}
     use {'jose-elias-alvarez/buftabline.nvim', config = function() require("buftabline").setup {} end}
     use {'lukas-reineke/indent-blankline.nvim', branch = 'lua'}
     use {'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' }, config = function() require('gitsigns').setup() end}
+    use {'kyazdani42/nvim-tree.lua', requires = { 'kyazdani42/nvim-web-devicons' }}
 
     -- essentials
     use 'tpope/vim-repeat'

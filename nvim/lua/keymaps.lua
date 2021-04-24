@@ -2,7 +2,6 @@ local opts = {noremap = true, silent = true}
 
 -- general
 vim.api.nvim_set_keymap('n', '<Leader>d', ':bd<CR>', opts)
-vim.api.nvim_set_keymap('n', '<Leader>n', ':bn<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>s', ':w<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>y', '"+y', opts)
 vim.api.nvim_set_keymap('n', '<Leader>p', '"+p', opts)
@@ -22,6 +21,10 @@ vim.api.nvim_set_keymap('n', '<Leader>td', ':UndoTask<CR>', opts)
 -- float term
 vim.api.nvim_set_keymap('n', '<F12>', ':FloatermToggle<CR>', opts)
 vim.api.nvim_set_keymap('t', '<F12>', '<C-\\><C-n>:FloatermToggle<CR>', opts)
+
+-- nvim-tree
+vim.api.nvim_set_keymap('n', '<Leader>n', ':NvimTreeToggle<CR>', opts)
+vim.api.nvim_set_keymap('n', '<Leader>ft', ':NvimTreeFindFile<CR>', opts)
 
 -- auto commands
 vim.cmd [[autocmd TermOpen * setlocal nonu nornu]]
