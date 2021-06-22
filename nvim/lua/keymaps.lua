@@ -19,8 +19,8 @@ vim.api.nvim_set_keymap('n', '<Leader>tt', ':ToggleTask<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>td', ':UndoTask<CR>', opts)
 
 -- float term
-vim.api.nvim_set_keymap('n', '<F12>', ':FloatermToggle<CR>', opts)
-vim.api.nvim_set_keymap('t', '<F12>', '<C-\\><C-n>:FloatermToggle<CR>', opts)
+vim.api.nvim_set_keymap('n', '<F12>', ':ToggleTerm<CR>', opts)
+vim.api.nvim_set_keymap('t', '<F12>', '<C-\\><C-n>:ToggleTerm<CR>', opts)
 
 -- nvim-tree
 vim.api.nvim_set_keymap('n', '<Leader>n', ':NvimTreeToggle<CR>', opts)

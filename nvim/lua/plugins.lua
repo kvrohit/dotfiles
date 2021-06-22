@@ -16,6 +16,7 @@ return packer.startup(function()
     use 'sainnhe/edge'
     use 'sainnhe/sonokai'
     use 'sainnhe/gruvbox-material'
+    use 'arzg/vim-substrata'
 
     -- enhancements
     use {'nvim-treesitter/nvim-treesitter'}
@@ -24,12 +25,14 @@ return packer.startup(function()
     use {'nvim-lua/popup.nvim'}
     use {'nvim-lua/plenary.nvim'}
     use {'nvim-telescope/telescope.nvim'}
-    use {'famiu/feline.nvim'}
-    use {'voldikss/vim-floaterm'}
-    use {'jose-elias-alvarez/buftabline.nvim', config = function() require("buftabline").setup {} end}
+    use {'akinsho/nvim-toggleterm.lua', config = function() require('toggleterm').setup {direction = 'float'} end}
+    use {'jose-elias-alvarez/buftabline.nvim', config = function() require('buftabline').setup {} end}
     use {'lukas-reineke/indent-blankline.nvim', branch = 'lua'}
     use {'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' }, config = function() require('gitsigns').setup() end}
     use {'kyazdani42/nvim-tree.lua', requires = { 'kyazdani42/nvim-web-devicons' }}
+    use {'hoob3rt/lualine.nvim', config = function() require('lualine').setup {options = {theme = 'iceberg_dark'}} end}
+    use {'prettier/vim-prettier', run = 'yarn install'}
+    use {'norcalli/nvim-colorizer.lua', config = function() require('colorizer').setup() end}
 
     -- essentials
     use 'tpope/vim-repeat'
@@ -45,4 +48,5 @@ return packer.startup(function()
 
     -- linting
     use 'dense-analysis/ale'
+    -- use {'mfussenegger/nvim-lint', config = function() require('lint').linters_by_ft = {sh = {'shellcheck',}} end}
 end)

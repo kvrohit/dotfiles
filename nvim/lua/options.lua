@@ -22,13 +22,13 @@ vim.o.mouse = 'a'
 -- color
 vim.g.syntax = true
 vim.api.nvim_set_option('termguicolors', true) -- Enable 24bit color
--- vim.api.nvim_exec('autocmd ColorScheme * highlight Normal ctermbg=NONE guibg=NONE', false) -- Make sure the background color stays as transparent
 vim.g.gruvbox_material_enable_italic = 1
+vim.g.sonokai_style = 'andromeda'
 vim.g.sonokai_enable_italic = 1
-vim.g.everforest_background = "hard"
-vim.g.everforest_enable_italic = 1
-vim.g.tokyonight_style = "night"
-vim.cmd('colorscheme gruvbox-material')
+vim.g.edge_style = 'aura'
+vim.g.edge_enable_italic = 1
+vim.g.edge_transparent_background = 1
+vim.cmd [[colorscheme substrata]]
 
 vim.wo.number = true
 vim.wo.relativenumber = true
