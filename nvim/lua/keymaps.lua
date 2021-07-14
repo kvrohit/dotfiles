@@ -15,8 +15,9 @@ vim.api.nvim_set_keymap('n', '<Leader>td', ':UndoTask<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>n', ':NvimTreeToggle<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>ft', ':NvimTreeFindFile<CR>', opts)
 
--- nvim_bufferline
-vim.api.nvim_set_keymap('n', '<Leader>bb', ':BufferLinePick<CR>', opts)
+-- bufferline
+vim.api.nvim_set_keymap('n', '<Left>', ':BufPrev<CR>', opts)
+vim.api.nvim_set_keymap('n', '<Right>', ':BufNext<CR>', opts)
 
 -- auto commands
 vim.cmd [[autocmd TermOpen * setlocal nonu nornu]]
