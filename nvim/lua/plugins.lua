@@ -116,7 +116,7 @@ local plugins = {
   {'tpope/vim-fugitive'},
   {'tpope/vim-sleuth'},
   {'b3nj5m1n/kommentary'},
-  {'kvrohit/nvim-tasks'},
+  {'kvrohit/tasks.nvim'},
   {
     'windwp/nvim-autopairs',
     config = function()
