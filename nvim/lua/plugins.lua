@@ -1,99 +1,140 @@
-vim.cmd [[packadd packer.nvim]]
+local execute = vim.api.nvim_command
+local fn = vim.fn
 
-local packer = require('packer')
+local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
+
+if fn.empty(fn.glob(install_path)) > 0 then
+  fn.system({'git', 'clone', 'https://github.com/wbthomason/packer.nvim', install_path})
+  execute 'packadd packer.nvim'
+end
+
+local packer_ok, packer = pcall(require, "packer")
+if not packer_ok then
+  return
+end
 
 packer.init {
-	git = {
-		clone_timeout = 120,
-	},
+  git = {
+    clone_timeout = 120,
+  },
+  display = {
+    open_fn = function()
+      return require("packer.util").float { border = "single" }
+    end,
+  },
 }
 
 local plugins = {
-    -- packer
-    {'wbthomason/packer.nvim', opt = true},
+  -- packer
+  {'wbthomason/packer.nvim'},
 
-    -- color schemes
-    {'sainnhe/edge'},
-    {'sainnhe/sonokai'},
-    {'sainnhe/gruvbox-material'},
-    {'arzg/vim-substrata'},
+  -- color schemes
+  {'arzg/vim-substrata'},
+  {'folke/lsp-colors.nvim'},
 
-    -- enhancements
-    {'nvim-treesitter/nvim-treesitter'},
-    {'neovim/nvim-lspconfig'},
-    {'hrsh7th/nvim-compe'},
-    {'nvim-lua/popup.nvim'},
-    {'nvim-lua/plenary.nvim'},
-    {'nvim-telescope/telescope.nvim'},
-    {
-        'akinsho/nvim-toggleterm.lua',
-        config = function()
-            require('toggleterm').setup {
-                direction = 'float'
-            }
-        end
-    },
-    {
-        'jose-elias-alvarez/buftabline.nvim',
-        config = function()
-            require('buftabline').setup {}
-        end
-    },
-    {
-        'lukas-reineke/indent-blankline.nvim',
-        branch = 'lua'
-    },
-    {
-        'lewis6991/gitsigns.nvim',
-        requires = { 'nvim-lua/plenary.nvim' },
-        config = function()
-            require('gitsigns').setup()
-        end
-    },
-    {
-        'kyazdani42/nvim-tree.lua',
-        requires = { 'kyazdani42/nvim-web-devicons' }
-    },
-    {
-        'hoob3rt/lualine.nvim',
-        config = function()
-            require('lualine').setup {
-                options = {
-                    theme = 'iceberg_dark'
-                }
-            }
-        end
-    },
-    {
-        'prettier/vim-prettier',
-        run = 'yarn install'
-    },
-    {
-        'norcalli/nvim-colorizer.lua',
-        config = function()
-            require('colorizer').setup()
-        end
-    },
+  -- enhancements
+  {
+    'nvim-telescope/telescope.nvim',
+    requires = {{'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'}},
+    config = function()
+      require('config.telescope').setup()
+    end
+  },
+  -- lsp
+  {
+    'neovim/nvim-lspconfig',
+    config = function()
+      require('config.lsp').setup()
+    end
+  },
+  {
+    'glepnir/lspsaga.nvim',
+    config = function()
+      require('config.lspsaga').setup()
+    end
+  },
+  {
+    'onsails/lspkind-nvim',
+    config = function()
+      require('lspkind').init {}
+    end
+  },
+  {'ray-x/lsp_signature.nvim'},
 
-    -- essentials
-    {'tpope/vim-repeat'},
-    {'tpope/vim-surround'},
-    {'tpope/vim-fugitive'},
-    {'b3nj5m1n/kommentary'},
-    {'kvrohit/nvim-tasks'},
-    {'jiangmiao/auto-pairs'},
+  -- completion
+  {
+    'hrsh7th/nvim-compe',
+    config = function()
+      require('config.compe').setup()
+    end
+  },
+  {
+    'nvim-treesitter/nvim-treesitter',
+    config = function()
+      require('config.treesitter').setup()
+    end
+  },
+  {
+    'akinsho/nvim-toggleterm.lua',
+    config = function()
+      require('config.toggleterm').setup()
+    end
+  },
+  {
+    'jose-elias-alvarez/buftabline.nvim',
+    config = function()
+      require('config.buftabline').setup()
+    end
+  },
+  {
+    'lewis6991/gitsigns.nvim',
+    requires = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require('gitsigns').setup()
+    end
+  },
+  {
+    'kyazdani42/nvim-tree.lua',
+    requires = { 'kyazdani42/nvim-web-devicons' }
+  },
+  {
+    'norcalli/nvim-colorizer.lua',
+    config = function()
+      require('colorizer').setup()
+    end
+  },
+  {
+    'tamton-aquib/staline.nvim',
+    config = function()
+      require('config.statusline').setup()
+    end,
+  },
 
-    -- additional filetype support
-    {'evanleck/vim-svelte'},
-    {'mechatroner/rainbow_csv'},
-
-    -- linting
-    {'dense-analysis/ale'},
-    -- use {'mfussenegger/nvim-lint', config = function() require('lint').linters_by_ft = {sh = {'shellcheck',}} end}
+  -- essentials
+  {'tpope/vim-repeat'},
+  {'tpope/vim-surround'},
+  {'tpope/vim-fugitive'},
+  {'tpope/vim-sleuth'},
+  {'b3nj5m1n/kommentary'},
+  {'kvrohit/nvim-tasks'},
+  {
+    'windwp/nvim-autopairs',
+    config = function()
+      require('config.autopairs').setup()
+    end
+  },
+  {
+    'mhartington/formatter.nvim',
+    config = function()
+      require('config.formatter').setup()
+    end
+  },
+  {'lukas-reineke/indent-blankline.nvim'},
 }
 
+vim.cmd([[autocmd BufWritePost plugins.lua source <afile> | PackerCompile]])
 return packer.startup(function(use)
-    for _, v in pairs(plugins) do
-        use(v)
-    end
+  for _, v in pairs(plugins) do
+    use(v)
+  end
 end)
