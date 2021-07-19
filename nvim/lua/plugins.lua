@@ -29,7 +29,7 @@ local plugins = {
   {'wbthomason/packer.nvim'},
 
   -- color schemes
-  {'arzg/vim-substrata'},
+  {'kvrohit/substrata.nvim'},
   {'folke/lsp-colors.nvim'},
 
   -- enhancements
