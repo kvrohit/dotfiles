@@ -30,7 +30,6 @@ local plugins = {
 
   -- color schemes
   {'kvrohit/substrata.nvim'},
-  {'folke/lsp-colors.nvim'},
 
   -- enhancements
   {
