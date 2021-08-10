@@ -6,11 +6,11 @@ M.setup = function()
       line_column = " %04l/%04L 並%P% ",
     },
     mode_colors = {
-      n = "#659ea2",
+      n = "#8296b0",
       i = "#a18daf",
       c = "#ab924c",
-      v = "#8296b0",
-      V = "#8296b0",
+      v = "#659ea2",
+      V = "#659ea2",
     },
     mode_icons = {
       n = "N",

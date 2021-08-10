@@ -27,11 +27,9 @@ packer.init {
 local plugins = {
   -- packer
   {'wbthomason/packer.nvim'},
-
   -- color schemes
   {'kvrohit/substrata.nvim'},
   {'rafamadriz/neon'},
-
   -- enhancements
   {
     'nvim-telescope/telescope.nvim',
@@ -60,7 +58,6 @@ local plugins = {
     end
   },
   {'ray-x/lsp_signature.nvim'},
-
   -- completion
   {
     'hrsh7th/nvim-compe',
@@ -109,7 +106,6 @@ local plugins = {
       require('config.statusline').setup()
     end,
   },
-
   -- essentials
   {'tpope/vim-repeat'},
   {'tpope/vim-surround'},
