@@ -4,7 +4,6 @@ M.setup = function()
   require('staline').setup {
     defaults = {
       line_column = " %04l/%04L 並%P% ",
-      filename_section = "right",
     },
     mode_colors = {
       n = "#659ea2",
