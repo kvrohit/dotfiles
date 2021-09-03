@@ -8,8 +8,8 @@ M.setup = function()
         -- prettier
         function()
           return {
-            exe = "npx",
-            args = {"--no-install", "prettier", "--stdin-filepath", vim.api.nvim_buf_get_name(0)},
+            exe = "prettier",
+            args = {"--stdin-filepath", vim.api.nvim_buf_get_name(0)},
             stdin = true
           }
         end
@@ -18,8 +18,8 @@ M.setup = function()
         -- prettier
         function()
           return {
-            exe = "npx",
-            args = {"--no-install", "prettier", "--stdin-filepath", vim.api.nvim_buf_get_name(0)},
+            exe = "prettier",
+            args = {"--stdin-filepath", vim.api.nvim_buf_get_name(0)},
             stdin = true
           }
         end
@@ -28,8 +28,8 @@ M.setup = function()
         -- prettier
         function()
           return {
-            exe = "npx",
-            args = {"--no-install", "prettier", "--stdin-filepath", vim.api.nvim_buf_get_name(0)},
+            exe = "prettier",
+            args = {"--stdin-filepath", vim.api.nvim_buf_get_name(0)},
             stdin = true
           }
         end
