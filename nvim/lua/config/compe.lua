@@ -1,26 +1,38 @@
 local M = {}
+local cmp = require('cmp')
 
 M.setup = function()
-  require('compe').setup {
-      enabled = true,
-      preselect = 'always',
-      documentation = true,
-      source = {
-          path = true,
-          buffer = true,
-          calc = true,
-          nvim_lsp = true,
-          nvim_lua = true,
-          spell = true,
-          tags = true,
-          treesitter = true,
-      },
+  cmp.setup {
+    snippet = {
+      expand = function(args)
+        vim.fn["vsnip#anonymous"](args.body)
+      end,
+    },
+    mapping = {
+      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.close(),
+      ['<CR>'] = cmp.mapping.confirm({
+        behavior = cmp.ConfirmBehavior.Replace,
+        select = true,
+      })
+    },
+    sources = {
+      { name = 'nvim_lsp' },
+      { name = 'buffer' },
+    },
+    formatting = {
+      format = function(entry, vim_item)
+        vim_item.kind = require('lspkind').presets.default[vim_item.kind] .. " " .. vim_item.kind
+        vim_item.menu = ({
+          buffer = "[Buf]",
+          nvim_lsp = "[LSP]",
+        })[entry.source.name]
+        return vim_item
+      end,
+    },
   }
-
-  local map_opts = {noremap = true, silent = true, expr = true}
-  vim.api.nvim_set_keymap('i', '<C-Space>', 'compe#complete()', map_opts)
-  -- vim.api.nvim_set_keymap('i', '<CR>', "compe#confirm('<CR>')", opts)
-  vim.api.nvim_set_keymap('i', '<C-e>', "compe#close('<C-e>')", map_opts)
 end
 
 return M

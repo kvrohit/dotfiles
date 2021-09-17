@@ -14,8 +14,11 @@ M.setup = function()
 
   -- language servers
   local servers = { "pyright", "rust_analyzer", "bashls", "cssls", "html", "tsserver", "yamlls" }
+  -- capabilities
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
   for _, lsp in ipairs(servers) do
-    nvim_lsp[lsp].setup { on_attach = on_attach }
+    nvim_lsp[lsp].setup { capabilities = capabilities }
   end
 end
 

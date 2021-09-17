@@ -1,31 +1,73 @@
 local M = {}
 
 M.setup = function()
-  require('staline').setup {
-    defaults = {
-      line_column = " %04l/%04L 並%P% ",
+  require('feline').setup {
+    colors = {
+      fg = "#b5b4c9",
+      bg = "#20222d",
+      black = "#20222d",
+      green = "#76a065",
+      cyan = "#659ea2",
+      red = "#cf8164",
+      magenta = "#a18daf",
+      blue = "#8296b0",
+      yellow = "#ab924c",
+      white = "#f0ecfe",
+      gray = "#5b5f71",
+      light_gray = "#6c6f82",
     },
-    mode_colors = {
-      n = "#8296b0",
-      i = "#a18daf",
-      ic= "#a18daf",
-      c = "#ab924c",
-      v = "#659ea2",
-      V = "#659ea2",
-    },
-    mode_icons = {
-      n = "N",
-      i = "I",
-      ic= "I",
-      c = "C",
-      v = "V",
-      t = "T",
-      V = "V",
-    },
-    sections = {
-      left = {'-mode', 'left_sep_double', 'branch', ' ', 'lsp'},
-      mid = {},
-      right = {'file_name', 'right_sep_double', '-line_column'},
+    components = {
+      active = {
+        {
+          {
+            provider = '▊ ',
+            hl = {
+              fg = 'gray',
+            },
+          },
+          {
+            provider = 'git_branch',
+            hl = {
+              fg = 'light_gray',
+            },
+          },
+        },
+        {
+          {
+            provider = 'file_info',
+            hl = {
+              fg = 'light_gray',
+            },
+            right_sep = 'right',
+            colored_icon = false,
+          },
+          {
+            provider = 'position',
+            hl = {
+              fg = 'light_gray',
+            },
+            right_sep = 'right',
+          },
+          {
+            provider = 'scroll_bar',
+            hl = {
+              fg = 'gray',
+            },
+          },
+        },
+      },
+      inactive = {
+        {
+          {
+            provider = '',
+            hl = {
+              bg = '#191c25',
+              fg = 'black',
+              style = 'underline',
+            },
+          },
+        },
+      },
     },
   }
 end

@@ -25,6 +25,7 @@ local plugins = {
   -- color schemes
   {'kvrohit/substrata.nvim'},
   {'rafamadriz/neon'},
+  {'folke/tokyonight.nvim'},
   -- enhancements
   {
     'nvim-telescope/telescope.nvim',
@@ -48,14 +49,19 @@ local plugins = {
   },
   {
     'onsails/lspkind-nvim',
-    config = function()
+    --[[ config = function()
       require('lspkind').init {}
-    end
+    end ]]
   },
   {'ray-x/lsp_signature.nvim'},
   -- completion
   {
-    'hrsh7th/nvim-compe',
+    'hrsh7th/nvim-cmp',
+    requires = {
+      'hrsh7th/vim-vsnip',
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-nvim-lsp',
+    },
     config = function()
       require('config.compe').setup()
     end
@@ -96,7 +102,7 @@ local plugins = {
     end
   },
   {
-    'tamton-aquib/staline.nvim',
+    'famiu/feline.nvim',
     config = function()
       require('config.statusline').setup()
     end,
