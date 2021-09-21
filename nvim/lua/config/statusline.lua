@@ -33,7 +33,7 @@ M.setup = function()
       active = {
         {
           {
-            provider = '▋ ',
+            provider = ' ',
             hl = function() 
               return {
                 fg = vi_mode.get_mode_color(),
@@ -55,7 +55,7 @@ M.setup = function()
             },
             right_sep = 'right',
             colored_icon = false,
-            file_modified_icon = 'Δ',
+            file_modified_icon = '',
           },
           {
             provider = 'position',
@@ -65,7 +65,7 @@ M.setup = function()
             right_sep = 'right',
           },
           {
-            provider = '▐',
+            provider = '',
             hl = function()
               return {
                 fg = vi_mode.get_mode_color(),

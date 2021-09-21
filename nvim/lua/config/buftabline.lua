@@ -2,11 +2,13 @@ local M = {}
 
 M.setup = function()
   require('buftabline').setup {
-    index_format = "%d) ",
-    icons = true,
-    auto_hide = true,
-    padding = 2,
-    show_no_name_buffers = true,
+    tab_format = " #{n} #{b} #{i} ",
+    icon_colors = false,
+    hlgroups = {
+      modified_current = "VisualMode",
+      modified_normal = "Warnings",
+      modified_active = "VisualMode",
+    }
   }
 end
 
