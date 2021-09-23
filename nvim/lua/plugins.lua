@@ -47,12 +47,6 @@ local plugins = {
       require('config.lspsaga').setup()
     end
   },
-  {
-    'onsails/lspkind-nvim',
-    --[[ config = function()
-      require('lspkind').init {}
-    end ]]
-  },
   {'ray-x/lsp_signature.nvim'},
   -- completion
   {
@@ -61,13 +55,15 @@ local plugins = {
       'hrsh7th/vim-vsnip',
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-path',
     },
     config = function()
-      require('config.compe').setup()
+      require('config.cmp').setup()
     end
   },
   {
     'nvim-treesitter/nvim-treesitter',
+    branch = '0.5-compat',
     config = function()
       require('config.treesitter').setup()
     end
@@ -116,6 +112,7 @@ local plugins = {
   {'kvrohit/tasks.nvim'},
   {
     'windwp/nvim-autopairs',
+    after = 'nvim-cmp',
     config = function()
       require('config.autopairs').setup()
     end

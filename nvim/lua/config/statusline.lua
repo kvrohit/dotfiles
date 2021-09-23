@@ -53,9 +53,10 @@ M.setup = function()
             hl = {
               fg = 'light_gray',
             },
+            type = 'unique',
             right_sep = 'right',
             colored_icon = false,
-            file_modified_icon = '',
+            file_modified_icon = '',
           },
           {
             provider = 'position',

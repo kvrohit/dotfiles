@@ -21,14 +21,21 @@ M.setup = function()
     sources = {
       { name = 'nvim_lsp' },
       { name = 'buffer' },
+      { name = 'path' },
     },
     formatting = {
       format = function(entry, vim_item)
-        vim_item.kind = require('lspkind').presets.default[vim_item.kind] .. " " .. vim_item.kind
+        local icons = require('config.lspkind').icons
+        vim_item.kind = icons[vim_item.kind] .. vim_item.kind
         vim_item.menu = ({
           buffer = "[Buf]",
           nvim_lsp = "[LSP]",
         })[entry.source.name]
+        vim_item.dup = ({
+          buffer = 1,
+          path = 1,
+          nvim_lsp = 0,
+        })[entry.source.name] or 0
         return vim_item
       end,
     },
