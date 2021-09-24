@@ -1,6 +1,7 @@
 local M = {}
-local vi_mode = require('feline.providers.vi_mode');
+local vi_mode = require('feline.providers.vi_mode')
 
+-- Substrata
 local colors = {
   fg = "#b5b4c9",
   bg = "#20222d",
@@ -31,6 +32,7 @@ M.setup = function()
     vi_mode_colors = vi_mode_colors,
     components = {
       active = {
+        -- left
         {
           {
             provider = ' ',
@@ -47,14 +49,27 @@ M.setup = function()
             },
           },
         },
+        -- center
         {
+        },
+        -- right
+        {
+          {
+            provider = 'lsp_client_names',
+            hl = {
+              fg = 'gray',
+            },
+            icon = ' ',
+            right_sep = ' ',
+          },
           {
             provider = 'file_info',
             hl = {
               fg = 'light_gray',
             },
             type = 'unique',
-            right_sep = 'right',
+            left_sep = ' ',
+            right_sep = ' ',
             colored_icon = false,
             file_modified_icon = '',
           },

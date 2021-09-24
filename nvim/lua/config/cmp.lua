@@ -28,8 +28,12 @@ M.setup = function()
         local icons = require('config.lspkind').icons
         vim_item.kind = icons[vim_item.kind] .. vim_item.kind
         vim_item.menu = ({
-          buffer = "[Buf]",
+          buffer = "[Buff]",
           nvim_lsp = "[LSP]",
+          path = "[Path]",
+          vsnip = "[Snip]",
+          luasnip = "[Snip]",
+          calc = "[Calc]",
         })[entry.source.name]
         vim_item.dup = ({
           buffer = 1,
