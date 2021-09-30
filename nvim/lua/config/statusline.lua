@@ -63,22 +63,25 @@ M.setup = function()
             right_sep = ' ',
           },
           {
-            provider = 'file_info',
+            provider = {
+              name = 'file_info',
+              opts = {
+                file_modified_icon = '',
+                colored_icon = false,
+              },
+            },
             hl = {
               fg = 'light_gray',
             },
-            type = 'unique',
             left_sep = ' ',
             right_sep = ' ',
-            colored_icon = false,
-            file_modified_icon = '',
           },
           {
             provider = 'position',
             hl = {
               fg = 'light_gray',
             },
-            right_sep = 'right',
+            right_sep = ' ',
           },
           {
             provider = '',
