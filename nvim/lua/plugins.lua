@@ -130,6 +130,12 @@ local plugins = {
     end
   },
   {'lukas-reineke/indent-blankline.nvim'},
+  {
+    "max397574/better-escape.nvim",
+    config = function()
+      require("better_escape").setup()
+    end,
+  },
 }
 
 vim.cmd([[autocmd BufWritePost plugins.lua source <afile> | PackerCompile]])

@@ -20,8 +20,8 @@ M.setup = function()
     },
     sources = {
       { name = 'nvim_lsp' },
-      { name = 'buffer' },
       { name = 'path' },
+      { name = 'buffer', keyword_length = 5 },
     },
     formatting = {
       format = function(entry, vim_item)
@@ -42,6 +42,9 @@ M.setup = function()
         })[entry.source.name] or 0
         return vim_item
       end,
+    },
+    experimental = {
+      native_menu = false,
     },
   }
 end

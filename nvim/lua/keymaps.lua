@@ -10,6 +10,7 @@ vim.api.nvim_set_keymap('n', 'Y', 'y$', opts)
 
 -- nvim-tasks
 vim.api.nvim_set_keymap('n', '<Leader>tt', ':ToggleTask<CR>', opts)
+vim.api.nvim_set_keymap('n', '<Leader>tc', ':CancelTask<CR>', opts)
 vim.api.nvim_set_keymap('n', '<Leader>td', ':UndoTask<CR>', opts)
 
 -- nvim-tree
