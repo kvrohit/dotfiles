@@ -1,6 +1,7 @@
 -- colorscheme
 vim.api.nvim_set_option('termguicolors', true)
 vim.g.substrata_italic_booleans = true
+vim.g.substrata_italic_functions = true
 vim.cmd [[colorscheme substrata]]
 -- vim.g.tokyonight_transparent = true
 -- vim.cmd [[colorscheme tokyonight]]
@@ -21,7 +22,7 @@ vim.opt.hidden = true
 vim.opt.updatetime = 300
 vim.opt.scrolloff = 5
 vim.opt.sidescrolloff = 5
-vim.opt.completeopt = 'menuone,noselect'
+vim.opt.completeopt = 'menu,menuone,noselect'
 vim.opt.shortmess = vim.o.shortmess .. 'c'
 vim.opt.showmode = false
 vim.opt.number = true

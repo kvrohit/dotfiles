@@ -44,25 +44,27 @@ local plugins = {
       require('config.lsp').setup()
     end
   },
-  {
-    'glepnir/lspsaga.nvim',
-    config = function()
-      require('config.lspsaga').setup()
-    end
-  },
   {'ray-x/lsp_signature.nvim'},
   -- completion
   {
     'hrsh7th/nvim-cmp',
     requires = {
-      'hrsh7th/vim-vsnip',
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
+      'L3MON4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip',
     },
     config = function()
       require('config.cmp').setup()
     end
+  },
+  {
+    "abecodes/tabout.nvim",
+    config = function()
+      require('config.tabout').setup()
+    end,
+    after = { "nvim-cmp" }, -- if a completion plugin is using tabs load it before
   },
   {
     'nvim-treesitter/nvim-treesitter',
