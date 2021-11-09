@@ -138,6 +138,7 @@ local plugins = {
       require("better_escape").setup()
     end,
   },
+  {'fladson/vim-kitty'},
 }
 
 vim.cmd([[autocmd BufWritePost plugins.lua source <afile> | PackerCompile]])

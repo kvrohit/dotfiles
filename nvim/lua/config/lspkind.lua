@@ -1,20 +1,20 @@
 local M = {}
 
 M.icons = {
-  Class = "ﴯ ",
+  Class = " ",
   Color = " ",
   Constant = " ",
   Constructor = " ",
   Enum = "練",
   EnumMember = " ",
   Event = " ",
-  Field = "ﰠ ",
+  Field = " ",
   File = " ",
   Folder = " ",
   Function = " ",
   Interface = " ",
   Keyword = " ",
-  Method = "ﯟ ",
+  Method = "柳",
   Module = " ",
   Operator = " ",
   Property = " ",

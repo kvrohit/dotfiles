@@ -44,7 +44,6 @@ return {
   exit_behavior = "Close",
   font = wezterm.font_with_fallback({
     {family = "Cartograph CF", weight = "Regular"},
-    "mononoki Nerd Font",
     "CartographCF Nerd Font",
   }),
   harfbuzz_features = {"calt=0", "clig=0", "liga=0"},
