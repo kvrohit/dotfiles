@@ -1,5 +1,5 @@
 local M = {}
-local vi_mode = require('feline.providers.vi_mode')
+local vi_mode = require("feline.providers.vi_mode")
 
 -- Substrata
 local colors = {
@@ -27,7 +27,7 @@ local vi_mode_colors = {
 }
 
 M.setup = function()
-  require('feline').setup {
+  require("feline").setup({
     colors = colors,
     vi_mode_colors = vi_mode_colors,
     components = {
@@ -35,56 +35,55 @@ M.setup = function()
         -- left
         {
           {
-            provider = ' ',
-            hl = function() 
+            provider = " ",
+            hl = function()
               return {
                 fg = vi_mode.get_mode_color(),
               }
-            end
+            end,
           },
           {
-            provider = 'git_branch',
+            provider = "git_branch",
             hl = {
-              fg = 'light_gray',
+              fg = "light_gray",
             },
           },
         },
         -- center
-        {
-        },
+        {},
         -- right
         {
           {
-            provider = 'lsp_client_names',
+            provider = "lsp_client_names",
             hl = {
-              fg = 'gray',
+              fg = "gray",
             },
-            icon = ' ',
-            right_sep = ' ',
+            icon = " ",
+            right_sep = " ",
           },
           {
             provider = {
-              name = 'file_info',
+              name = "file_info",
               opts = {
-                file_modified_icon = '',
+                file_modified_icon = "",
                 colored_icon = false,
               },
             },
             hl = {
-              fg = 'light_gray',
+              fg = "light_gray",
             },
-            left_sep = ' ',
-            right_sep = ' ',
+            left_sep = " ",
+            right_sep = " ",
           },
           {
-            provider = 'position',
+            provider = "position",
             hl = {
-              fg = 'light_gray',
+              fg = "light_gray",
             },
-            right_sep = ' ',
+            right_sep = " ",
           },
           {
-            provider = '',
+            provider = "",
             hl = function()
               return {
                 fg = vi_mode.get_mode_color(),
@@ -96,17 +95,17 @@ M.setup = function()
       inactive = {
         {
           {
-            provider = '',
+            provider = "",
             hl = {
-              bg = '#191c25',
-              fg = 'black',
-              style = 'underline',
+              bg = "#191c25",
+              fg = "black",
+              style = "underline",
             },
           },
         },
       },
     },
-  }
+  })
 end
 
 return M

@@ -1,7 +1,7 @@
 local wezterm = require("wezterm")
 
 -- Tab colors from the Substrata theme
-local colors = { 
+local colors = {
   fg = "#b5b4c9",
   fg1 = "#f0ecfe",
   bg0 = "#191c25",
@@ -37,19 +37,19 @@ local tab_bar_colors = {
 
 return {
   window_decorations = "RESIZE",
-  default_prog = {"/usr/local/bin/fish", "-l"},
+  default_prog = { "/usr/local/bin/fish", "-l" },
   font_size = 16.0,
   -- line_height = 1.2,
   hide_tab_bar_if_only_one_tab = true,
   exit_behavior = "Close",
   font = wezterm.font_with_fallback({
-    {family = "Cartograph CF", weight = "Regular"},
+    { family = "Cartograph CF", weight = "Regular" },
     "CartographCF Nerd Font",
   }),
-  harfbuzz_features = {"calt=0", "clig=0", "liga=0"},
+  harfbuzz_features = { "calt=0", "clig=0", "liga=0" },
   -- harfbuzz_features = {"ss01"},
   colors = {
-    tab_bar = tab_bar_colors
+    tab_bar = tab_bar_colors,
   },
   color_scheme = "Substrata",
   tab_max_width = 24,
