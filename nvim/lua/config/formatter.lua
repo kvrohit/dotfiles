@@ -19,7 +19,7 @@ end
 local lua_formatter = function()
   return {
     exe = "stylua",
-    args = { "--config-path " .. os.getenv("HOME") .. "/.config/stylua/stylua.toml", "-" },
+    args = { "-" },
     stdin = true,
   }
 end

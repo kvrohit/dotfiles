@@ -117,7 +117,6 @@ local plugins = {
   { "tpope/vim-surround" },
   { "tpope/vim-fugitive" },
   { "tpope/vim-sleuth" },
-  { "b3nj5m1n/kommentary" },
   { "kvrohit/tasks.nvim" },
   {
     "windwp/nvim-autopairs",
@@ -140,6 +139,12 @@ local plugins = {
     "max397574/better-escape.nvim",
     config = function()
       require("better_escape").setup()
+    end,
+  },
+  {
+    "numToStr/Comment.nvim",
+    config = function()
+      require("Comment").setup()
     end,
   },
   { "fladson/vim-kitty" },
