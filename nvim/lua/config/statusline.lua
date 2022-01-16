@@ -1,8 +1,8 @@
 local M = {}
 local vi_mode = require("feline.providers.vi_mode")
 
--- Substrata
-local colors = {
+-- Substrata color theme
+local substrata = {
   fg = "#b5b4c9",
   bg = "#20222d",
   black = "#20222d",
@@ -18,17 +18,17 @@ local colors = {
 }
 
 local vi_mode_colors = {
-  NORMAL = colors.gray,
-  INSERT = colors.magenta,
-  VISUAL = colors.cyan,
-  LINES = colors.cyan,
-  BLOCK = colors.cyan,
-  COMMAND = colors.yellow,
+  NORMAL = substrata.gray,
+  INSERT = substrata.magenta,
+  VISUAL = substrata.cyan,
+  LINES = substrata.cyan,
+  BLOCK = substrata.cyan,
+  COMMAND = substrata.yellow,
 }
 
 M.setup = function()
   require("feline").setup({
-    colors = colors,
+    theme = substrata,
     vi_mode_colors = vi_mode_colors,
     components = {
       active = {

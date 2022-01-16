@@ -27,6 +27,7 @@ local plugins = {
   { "rafamadriz/neon" },
   { "folke/tokyonight.nvim" },
   { "catppuccin/nvim" },
+  { "rebelot/kanagawa.nvim" },
   -- enhancements
   {
     "nvim-telescope/telescope.nvim",
@@ -69,7 +70,6 @@ local plugins = {
   },
   {
     "nvim-treesitter/nvim-treesitter",
-    branch = "0.5-compat",
     config = function()
       require("config.treesitter").setup()
     end,
@@ -148,6 +148,9 @@ local plugins = {
     end,
   },
   { "fladson/vim-kitty" },
+  { "ThePrimeagen/vim-be-good" },
+  { "b0o/schemastore.nvim" },
+  { "Olical/conjure" },
 }
 
 vim.cmd([[autocmd BufWritePost plugins.lua source <afile> | PackerCompile]])

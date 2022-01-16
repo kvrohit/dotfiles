@@ -36,12 +36,7 @@ local tab_bar_colors = {
 }
 
 return {
-  window_decorations = "RESIZE",
-  default_prog = { "/usr/local/bin/fish", "-l" },
   font_size = 16.0,
-  -- line_height = 1.2,
-  hide_tab_bar_if_only_one_tab = true,
-  exit_behavior = "Close",
   font = wezterm.font_with_fallback({
     { family = "Cartograph CF", weight = "Regular" },
     "CartographCF Nerd Font",
@@ -52,5 +47,14 @@ return {
     tab_bar = tab_bar_colors,
   },
   color_scheme = "Substrata",
+  exit_behavior = "Close",
   tab_max_width = 24,
+  hide_tab_bar_if_only_one_tab = true,
+  window_decorations = "RESIZE",
+  window_padding = {
+    left = 0,
+    right = 0,
+    top = 0,
+    bottom = 0,
+  },
 }

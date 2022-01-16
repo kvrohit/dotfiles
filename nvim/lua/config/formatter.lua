@@ -3,7 +3,7 @@ local M = {}
 local prettier_formatter = function()
   return {
     exe = "prettier",
-    args = { "--stdin-filepath", vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)) },
+    args = { "--plugin-search-dir=.", "--stdin-filepath", vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)) },
     stdin = true,
   }
 end
@@ -28,6 +28,14 @@ local python_formatter = function()
   return {
     exe = "black",
     args = { "-" },
+    stdin = true,
+  }
+end
+
+local clojure_formatter = function()
+  return {
+    exe = "cljstyle",
+    args = { "pipe" },
     stdin = true,
   }
 end
@@ -60,6 +68,9 @@ M.setup = function()
       yaml = {
         prettier_formatter,
       },
+      svelte = {
+        prettier_formatter,
+      },
       rust = {
         rust_formatter,
       },
@@ -68,6 +79,9 @@ M.setup = function()
       },
       python = {
         python_formatter,
+      },
+      clojure = {
+        clojure_formatter,
       },
     },
   })

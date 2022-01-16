@@ -2,6 +2,7 @@
 vim.api.nvim_set_option("termguicolors", true)
 vim.g.substrata_italic_booleans = true
 vim.g.substrata_italic_functions = true
+vim.g.substrata_variant = "brighter"
 vim.cmd([[colorscheme substrata]])
 -- vim.g.tokyonight_transparent = true
 -- vim.cmd [[colorscheme tokyonight]]
@@ -18,7 +19,6 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.ignorecase = true
 vim.opt.hlsearch = false
-vim.opt.hidden = true
 vim.opt.updatetime = 300
 vim.opt.scrolloff = 5
 vim.opt.sidescrolloff = 5
@@ -42,7 +42,9 @@ vim.opt.expandtab = true
 
 -- set leader to space
 vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 vim.b.mapleader = " "
+vim.b.maplocalleader = " "
 
 -- indentline
 vim.g.indent_blankline_setColors = 0
