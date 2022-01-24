@@ -129,10 +129,11 @@ local plugins = {
     "windwp/nvim-ts-autotag",
   },
   {
-    "mhartington/formatter.nvim",
+    "jose-elias-alvarez/null-ls.nvim",
     config = function()
-      require("config.formatter").setup()
+      require("config.null-ls").setup()
     end,
+    requires = { "nvim-lua/plenary.nvim" },
   },
   { "lukas-reineke/indent-blankline.nvim" },
   {
@@ -148,7 +149,6 @@ local plugins = {
     end,
   },
   { "fladson/vim-kitty" },
-  { "ThePrimeagen/vim-be-good" },
   { "b0o/schemastore.nvim" },
   { "Olical/conjure" },
 }

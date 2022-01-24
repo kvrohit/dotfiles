@@ -6,7 +6,7 @@ vim.api.nvim_set_keymap("n", "<Leader>s", ":w<CR>", opts)
 vim.api.nvim_set_keymap("n", "<Leader>qn", ":cnext<CR>", opts)
 vim.api.nvim_set_keymap("n", "<Leader>qp", ":cprevious<CR>", opts)
 vim.api.nvim_set_keymap("t", "<Esc>", "<C-\\><C-n>", opts)
-vim.api.nvim_set_keymap("n", "<Leader>fs", ":FormatWrite<CR>", opts)
+vim.api.nvim_set_keymap("n", "<Leader>fs", "<cmd>lua vim.lsp.buf.formatting_sync()<CR>", opts)
 
 -- nvim-tasks
 vim.api.nvim_set_keymap("n", "<Leader>tt", ":ToggleTask<CR>", opts)
