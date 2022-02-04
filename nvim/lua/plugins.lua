@@ -46,6 +46,7 @@ local plugins = {
       require("config.lsp").setup()
     end,
   },
+  { "williamboman/nvim-lsp-installer" },
   { "ray-x/lsp_signature.nvim" },
   -- completion
   {
@@ -151,6 +152,12 @@ local plugins = {
   { "fladson/vim-kitty" },
   { "b0o/schemastore.nvim" },
   { "Olical/conjure" },
+  {
+    "j-hui/fidget.nvim",
+    config = function()
+      require("fidget").setup()
+    end,
+  },
 }
 
 vim.cmd([[autocmd BufWritePost plugins.lua source <afile> | PackerCompile]])

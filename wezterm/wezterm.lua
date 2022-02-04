@@ -50,7 +50,6 @@ return {
   exit_behavior = "Close",
   tab_max_width = 24,
   hide_tab_bar_if_only_one_tab = true,
-  window_decorations = "RESIZE",
   window_padding = {
     left = 0,
     right = 0,
