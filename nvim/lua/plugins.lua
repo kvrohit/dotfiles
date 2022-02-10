@@ -42,11 +42,13 @@ local plugins = {
   -- lsp
   {
     "neovim/nvim-lspconfig",
+  },
+  {
+    "williamboman/nvim-lsp-installer",
     config = function()
       require("config.lsp").setup()
     end,
   },
-  { "williamboman/nvim-lsp-installer" },
   { "ray-x/lsp_signature.nvim" },
   -- completion
   {

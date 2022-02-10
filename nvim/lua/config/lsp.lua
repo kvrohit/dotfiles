@@ -1,31 +1,36 @@
 local M = {}
 
-local lsp_installer = require("nvim-lsp-installer")
-
--- Register a handler that will be called for each installed server when it's ready (i.e. when installation is finished
--- or if the server is already installed).
-lsp_installer.on_server_ready(function(server)
-  local opts = {}
-
-  -- (optional) Customize the options passed to the server
-  -- if server.name == "tsserver" then
-  --     opts.root_dir = function() ... end
-  -- end
-
-  -- This setup() function will take the provided server configuration and decorate it with the necessary properties
-  -- before passing it onwards to lspconfig.
-  -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-  server:setup(opts)
-end)
-
 M.setup = function()
-  local nvim_lsp = require("lspconfig")
-  local on_attach = function(client, bufnr)
+  local lsp_installer = require("nvim-lsp-installer")
+  local capabilities = vim.lsp.protocol.make_client_capabilities()
+  capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+
+  -- List of servers to be installed by default
+  local servers = {
+    "bashls",
+    "clojure_lsp",
+    "cssls",
+    -- "gopls",
+    "html",
+    "jsonls",
+    "pyright",
+    "rust_analyzer",
+    "sumneko_lua",
+    "tsserver",
+    "yamlls",
+  }
+
+  for _, name in pairs(servers) do
+    local server_is_found, server = lsp_installer.get_server(name)
+    if server_is_found and not server:is_installed() then
+      print("Installing " .. name)
+      server:install()
+    end
+  end
+
+  local function on_attach(client, bufnr)
     local function buf_set_keymap(...)
       vim.api.nvim_buf_set_keymap(bufnr, ...)
-    end
-    local function buf_set_option(...)
-      vim.api.nvim_buf_set_option(bufnr, ...)
     end
 
     -- Mappings.
@@ -48,73 +53,49 @@ M.setup = function()
     buf_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
     buf_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
     buf_set_keymap("n", "<space>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
-    buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+    vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
 
     -- Disable LSP server's formatting capabilities
     client.resolved_capabilities.document_formatting = false
   end
 
-  -- language servers
-  local servers = {
-    {
-      name = "jsonls",
-      settings = {
+  local enhance_server_opts = {
+    -- Provide settings that should only apply to the "eslintls" server
+    ["jsonls"] = function(opts)
+      opts.settings = {
         json = {
           schemas = require("schemastore").json.schemas(),
         },
-      },
-    },
-    {
-      name = "pyright",
-      settings = nil,
-    },
-    {
-      name = "rust_analyzer",
-      settings = nil,
-    },
-    {
-      name = "bashls",
-      settings = nil,
-    },
-    {
-      name = "cssls",
-      settings = nil,
-    },
-    {
-      name = "html",
-      settings = nil,
-    },
-    {
-      name = "tsserver",
-      settings = nil,
-    },
-    {
-      name = "yamlls",
-      settings = nil,
-    },
-    {
-      name = "clojure_lsp",
-      settings = nil,
-    },
-    {
-      name = "sumneko_lua",
-      settings = nil,
-    },
+      }
+    end,
+    ["sumneko_lua"] = function(opts)
+      opts.settings = {
+        Lua = {
+          diagnostics = {
+            globals = { "vim" },
+          },
+          telemetry = {
+            enable = false,
+          },
+        },
+      }
+    end,
   }
 
-  -- capabilities
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
-  for _, server in ipairs(servers) do
-    nvim_lsp[server.name].setup({
+  lsp_installer.on_server_ready(function(server)
+    -- Specify the default options which we'll use to setup all servers
+    local opts = {
       on_attach = on_attach,
       capabilities = capabilities,
-      flags = {
-        debounce_text_changes = 150,
-      },
-      settings = server.settings,
-    })
-  end
+    }
+
+    if enhance_server_opts[server.name] then
+      -- Enhance the default opts with the server-specific ones
+      enhance_server_opts[server.name](opts)
+    end
+
+    server:setup(opts)
+  end)
 end
 
 return M
