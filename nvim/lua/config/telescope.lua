@@ -1,7 +1,7 @@
 local M = {}
 
 M.setup = function()
-  require("telescope").setup({
+  local opts = {
     defaults = {
       winblend = 10,
       layout_strategy = "horizontal",
@@ -21,7 +21,7 @@ M.setup = function()
         sorting_strategy = "ascending",
       },
     },
-  })
+  }
 
   local map_opts = { noremap = true, silent = true }
   vim.api.nvim_set_keymap("n", "<Leader>ff", "<cmd>lua require('config.telescope').project_files()<cr>", map_opts)
@@ -34,6 +34,8 @@ M.setup = function()
     "<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>",
     map_opts
   )
+
+  require("telescope").setup(opts)
 end
 
 M.project_files = function()

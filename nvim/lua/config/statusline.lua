@@ -5,6 +5,9 @@ local vi_mode = require("feline.providers.vi_mode")
 local substrata = {
   fg = "#b5b4c9",
   bg = "#20222d",
+  bg2 = "#272935",
+  bg3 = "#2e313d",
+  bg4 = "#3c3f4e",
   black = "#20222d",
   green = "#76a065",
   cyan = "#659ea2",
@@ -18,16 +21,18 @@ local substrata = {
 }
 
 local vi_mode_colors = {
-  NORMAL = substrata.gray,
-  INSERT = substrata.magenta,
-  VISUAL = substrata.cyan,
-  LINES = substrata.cyan,
-  BLOCK = substrata.cyan,
-  COMMAND = substrata.yellow,
+  NORMAL = substrata.bg4,
+  OP = substrata.bg4,
+  INSERT = substrata.light_gray,
+  VISUAL = substrata.blue,
+  LINES = substrata.blue,
+  BLOCK = substrata.blue,
+  REPLACE = substrata.red,
+  COMMAND = substrata.bg3,
 }
 
 M.setup = function()
-  require("feline").setup({
+  local opts = {
     theme = substrata,
     vi_mode_colors = vi_mode_colors,
     components = {
@@ -35,7 +40,7 @@ M.setup = function()
         -- left
         {
           {
-            provider = " ",
+            provider = "█ ",
             hl = function()
               return {
                 fg = vi_mode.get_mode_color(),
@@ -44,9 +49,7 @@ M.setup = function()
           },
           {
             provider = "git_branch",
-            hl = {
-              fg = "light_gray",
-            },
+            hl = { fg = "light_gray" },
           },
         },
         -- center
@@ -54,12 +57,26 @@ M.setup = function()
         -- right
         {
           {
+            provider = "diagnostic_errors",
+            hl = { fg = "red" },
+          },
+          {
+            provider = "diagnostic_warnings",
+            hl = { fg = "yellow" },
+          },
+          {
+            provider = "diagnostic_hints",
+            hl = { fg = "cyan" },
+          },
+          {
+            provider = "diagnostic_info",
+            hl = { fg = "blue" },
+          },
+          {
             provider = "lsp_client_names",
-            hl = {
-              fg = "gray",
-            },
+            hl = { fg = "magenta" },
             icon = " ",
-            right_sep = " ",
+            left_sep = "  ",
           },
           {
             provider = {
@@ -69,21 +86,18 @@ M.setup = function()
                 colored_icon = false,
               },
             },
-            hl = {
-              fg = "light_gray",
-            },
-            left_sep = " ",
-            right_sep = " ",
+            hl = { fg = "blue" },
+            left_sep = "  ",
+            right_sep = "  ",
           },
           {
             provider = "position",
-            hl = {
-              fg = "light_gray",
-            },
+            padding = true,
+            hl = { fg = "fg" },
             right_sep = " ",
           },
           {
-            provider = "",
+            provider = "█",
             hl = function()
               return {
                 fg = vi_mode.get_mode_color(),
@@ -105,7 +119,9 @@ M.setup = function()
         },
       },
     },
-  })
+  }
+
+  require("feline").setup(opts)
 end
 
 return M

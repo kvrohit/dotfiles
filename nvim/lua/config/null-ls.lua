@@ -2,7 +2,7 @@ local M = {}
 
 M.setup = function()
   local null_ls = require("null-ls")
-  null_ls.setup({
+  local opts = {
     sources = {
       null_ls.builtins.formatting.stylua,
       null_ls.builtins.formatting.black,
@@ -12,7 +12,9 @@ M.setup = function()
       null_ls.builtins.diagnostics.eslint,
       null_ls.builtins.diagnostics.shellcheck,
     },
-  })
+  }
+
+  null_ls.setup(opts)
 end
 
 return M

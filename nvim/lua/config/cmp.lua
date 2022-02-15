@@ -8,7 +8,7 @@ local has_words_before = function()
 end
 
 M.setup = function()
-  cmp.setup({
+  local opts = {
     snippet = {
       expand = function(args)
         luasnip.lsp_expand(args.body)
@@ -85,7 +85,9 @@ M.setup = function()
       native_menu = false,
       ghost_text = true,
     },
-  })
+  }
+
+  cmp.setup(opts)
 end
 
 return M
