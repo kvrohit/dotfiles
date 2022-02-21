@@ -50,6 +50,13 @@ local plugins = {
     end,
   },
   { "ray-x/lsp_signature.nvim" },
+  {
+    "folke/trouble.nvim",
+    requires = "kyazdani42/nvim-web-devicons",
+    config = function()
+      require("config.trouble").setup()
+    end,
+  },
   -- completion
   {
     "hrsh7th/nvim-cmp",

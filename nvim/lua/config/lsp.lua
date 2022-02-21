@@ -53,7 +53,6 @@ M.setup = function()
     buf_set_keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", opts)
     buf_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
     buf_set_keymap("n", "<space>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
-    vim.cmd([[ command! Format execute 'lua vim.lsp.buf.formatting()' ]])
 
     -- Disable LSP server's formatting capabilities
     client.resolved_capabilities.document_formatting = false

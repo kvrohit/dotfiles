@@ -21,14 +21,14 @@ local substrata = {
 }
 
 local vi_mode_colors = {
-  NORMAL = substrata.bg4,
-  OP = substrata.bg4,
-  INSERT = substrata.light_gray,
+  NORMAL = substrata.bg3,
+  OP = substrata.bg3,
+  INSERT = substrata.gray,
   VISUAL = substrata.blue,
   LINES = substrata.blue,
   BLOCK = substrata.blue,
-  REPLACE = substrata.red,
-  COMMAND = substrata.bg3,
+  REPLACE = substrata.yellow,
+  COMMAND = substrata.bg2,
 }
 
 M.setup = function()
@@ -49,7 +49,7 @@ M.setup = function()
           },
           {
             provider = "git_branch",
-            hl = { fg = "light_gray" },
+            hl = { fg = "blue" },
           },
         },
         -- center
@@ -74,7 +74,7 @@ M.setup = function()
           },
           {
             provider = "lsp_client_names",
-            hl = { fg = "magenta" },
+            hl = { fg = "light_gray" },
             icon = " ",
             left_sep = "  ",
           },
@@ -88,12 +88,6 @@ M.setup = function()
             },
             hl = { fg = "blue" },
             left_sep = "  ",
-            right_sep = "  ",
-          },
-          {
-            provider = "position",
-            padding = true,
-            hl = { fg = "fg" },
             right_sep = " ",
           },
           {
