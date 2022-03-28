@@ -35,8 +35,6 @@ M.setup = function()
 
     -- Mappings.
     local opts = { noremap = true, silent = true }
-
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
     buf_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
     buf_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
     buf_set_keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
@@ -54,12 +52,11 @@ M.setup = function()
     buf_set_keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", opts)
     buf_set_keymap("n", "<space>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
 
-    -- Disable LSP server's formatting capabilities
+    -- Disable LSP server's formatting capabilities; defer it to null-ls
     client.resolved_capabilities.document_formatting = false
   end
 
   local enhance_server_opts = {
-    -- Provide settings that should only apply to the "eslintls" server
     ["jsonls"] = function(opts)
       opts.settings = {
         json = {
@@ -82,7 +79,6 @@ M.setup = function()
   }
 
   lsp_installer.on_server_ready(function(server)
-    -- Specify the default options which we'll use to setup all servers
     local opts = {
       on_attach = on_attach,
       capabilities = capabilities,

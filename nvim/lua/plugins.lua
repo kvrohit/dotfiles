@@ -23,11 +23,12 @@ local plugins = {
   -- packer
   { "wbthomason/packer.nvim" },
   -- color schemes
-  { "kvrohit/substrata.nvim" },
+  { "/Users/rohit/play/neovim/substrata.nvim" },
   { "rafamadriz/neon" },
   { "folke/tokyonight.nvim" },
   { "catppuccin/nvim" },
   { "rebelot/kanagawa.nvim" },
+  { "/Users/rohit/play/neovim/rasmus.nvim" },
   -- enhancements
   {
     "nvim-telescope/telescope.nvim",
@@ -49,7 +50,6 @@ local plugins = {
       require("config.lsp").setup()
     end,
   },
-  { "ray-x/lsp_signature.nvim" },
   {
     "folke/trouble.nvim",
     requires = "kyazdani42/nvim-web-devicons",
@@ -165,6 +165,16 @@ local plugins = {
     "j-hui/fidget.nvim",
     config = function()
       require("fidget").setup()
+    end,
+  },
+  {
+    "eraserhd/parinfer-rust",
+    run = "cargo build --release",
+  },
+  {
+    "ray-x/lsp_signature.nvim",
+    config = function()
+      require("lsp_signature").setup()
     end,
   },
 }
