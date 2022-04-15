@@ -4,6 +4,7 @@ vim.g.substrata_italic_booleans = true
 vim.g.substrata_italic_functions = true
 vim.g.substrata_italic_keywords = true
 vim.g.substrata_variant = "brighter"
+vim.g.rasmus_italic_functions = true
 vim.cmd([[colorscheme rasmus]])
 -- vim.g.tokyonight_transparent = true
 -- vim.cmd [[colorscheme tokyonight]]

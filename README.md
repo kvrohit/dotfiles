@@ -13,10 +13,11 @@ Configurations for various programs
 
 1. Install Homebrew from https://brew.sh/
 2. Install various apps using `brew install <application>`
+3. Install `nodejs`; required for LSP and formatting support.
 
 ### Arch Linux
 
-Install apps using `pacman -S <application>` or from AUR (`yay`)
+Install apps using `pacman -S <application>` or from AUR (`paru` or `yay`)
 
 ## App setup
 
@@ -24,4 +25,4 @@ Install apps using `pacman -S <application>` or from AUR (`yay`)
 
 1. Install neovim `> 0.5` using any of the package managers that works with your OS.
 2. Install packer `git clone https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim`.
-3. Launch `neovim` then `:PackerCompile`, restart and `:PackerSync` to install all plugins.
+3. Launch `neovim` and run `:PackerSync` to install all plugins.

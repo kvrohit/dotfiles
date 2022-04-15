@@ -38,11 +38,11 @@ local tab_bar_colors = {
 return {
   font_size = 16.0,
   font = wezterm.font_with_fallback({
-    { family = "Cartograph CF", weight = "Regular" },
-    "CartographCF Nerd Font",
+    { family = "MonoLisa", weight = "Medium" },
+    "Symbols Nerd Font",
   }),
-  harfbuzz_features = { "calt=0", "clig=0", "liga=0" },
-  -- harfbuzz_features = {"ss01"},
+  -- harfbuzz_features = { "calt=0", "clig=0", "liga=0" },
+  harfbuzz_features = {"ss02"},
   colors = {
     tab_bar = tab_bar_colors,
   },

@@ -104,10 +104,20 @@ local plugins = {
     end,
   },
   {
-    "kyazdani42/nvim-tree.lua",
-    requires = { "kyazdani42/nvim-web-devicons" },
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v2.x",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+    },
     config = function()
-      require("nvim-tree").setup()
+      require("neo-tree").setup({
+        window = {
+          width = 30,
+        },
+      })
+      vim.cmd([[nnoremap \ :Neotree reveal<cr>]])
     end,
   },
   {
@@ -175,6 +185,12 @@ local plugins = {
     "ray-x/lsp_signature.nvim",
     config = function()
       require("lsp_signature").setup()
+    end,
+  },
+  {
+    "phaazon/hop.nvim",
+    config = function()
+      require("hop").setup()
     end,
   },
 }

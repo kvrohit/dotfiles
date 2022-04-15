@@ -1,55 +1,43 @@
 local M = {}
-local vi_mode = require("feline.providers.vi_mode")
 
--- Substrata color theme
-local substrata = {
-  fg = "#b5b4c9",
-  bg = "#20222d",
-  bg2 = "#272935",
-  bg3 = "#2e313d",
-  bg4 = "#3c3f4e",
-  black = "#20222d",
-  green = "#76a065",
-  cyan = "#659ea2",
-  red = "#cf8164",
-  magenta = "#a18daf",
-  blue = "#8296b0",
-  yellow = "#ab924c",
-  white = "#f0ecfe",
-  gray = "#5b5f71",
-  light_gray = "#6c6f82",
-}
-
-local vi_mode_colors = {
-  NORMAL = substrata.bg3,
-  OP = substrata.bg3,
-  INSERT = substrata.gray,
-  VISUAL = substrata.blue,
-  LINES = substrata.blue,
-  BLOCK = substrata.blue,
-  REPLACE = substrata.yellow,
-  COMMAND = substrata.bg2,
+local mode_colors = {
+  n = "StatusLineNormalMode",
+  no = "StatusLineNormalMode",
+  i = "StatusLineInsertMode",
+  v = "StatusLineVisualMode",
+  V = "StatusLineVisualMode",
+  [""] = "StatusLine",
+  r = "StatusLineReplaceMode",
+  rm = "StatusLineReplaceMode",
+  R = "StatusLineReplaceMode",
+  Rv = "StatusLineReplaceMode",
+  s = "StatusLineVisualMode",
+  S = "StatusLineVisualMode",
+  c = "StatusLineTerminalMode",
+  ["!"] = "StatusLineReplaceMode",
+  t = "StatusLineTerminalMode",
 }
 
 M.setup = function()
   local opts = {
-    theme = substrata,
-    vi_mode_colors = vi_mode_colors,
     components = {
       active = {
         -- left
         {
           {
-            provider = "█ ",
+            provider = " ",
             hl = function()
-              return {
-                fg = vi_mode.get_mode_color(),
-              }
+              return mode_colors[vim.fn.mode()]
             end,
+            right_sep = { str = " ", hl = "StatusLine" },
           },
           {
             provider = "git_branch",
-            hl = { fg = "blue" },
+            hl = "StatusLine",
+          },
+          {
+            provider = "",
+            hl = "StatusLine",
           },
         },
         -- center
@@ -58,25 +46,25 @@ M.setup = function()
         {
           {
             provider = "diagnostic_errors",
-            hl = { fg = "red" },
+            hl = "StatusLineError",
           },
           {
             provider = "diagnostic_warnings",
-            hl = { fg = "yellow" },
+            hl = "StatusLineWarn",
           },
           {
             provider = "diagnostic_hints",
-            hl = { fg = "cyan" },
+            hl = "StatusLineHint",
           },
           {
             provider = "diagnostic_info",
-            hl = { fg = "blue" },
+            hl = "StatusLineInfo",
           },
           {
             provider = "lsp_client_names",
-            hl = { fg = "light_gray" },
+            hl = "StatusLineNC",
             icon = " ",
-            left_sep = "  ",
+            left_sep = { str = "  ", hl = "StatusLine" },
           },
           {
             provider = {
@@ -86,16 +74,14 @@ M.setup = function()
                 colored_icon = false,
               },
             },
-            hl = { fg = "blue" },
-            left_sep = "  ",
-            right_sep = " ",
+            hl = "StatusLine",
+            left_sep = { str = "  ", hl = "StatusLine" },
+            right_sep = { str = " ", hl = "StatusLine" },
           },
           {
-            provider = "█",
+            provider = " ",
             hl = function()
-              return {
-                fg = vi_mode.get_mode_color(),
-              }
+              return mode_colors[vim.fn.mode()]
             end,
           },
         },
@@ -105,12 +91,17 @@ M.setup = function()
           {
             provider = "",
             hl = {
-              bg = "#191c25",
+              bg = "StatusLine",
               fg = "black",
               style = "underline",
             },
           },
         },
+      },
+    },
+    disable = {
+      filetypes = {
+        "neo-tree",
       },
     },
   }
