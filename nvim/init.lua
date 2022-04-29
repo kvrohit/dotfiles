@@ -191,6 +191,40 @@ vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
 
 -- LSP
+local servers = {
+  "bashls",
+  "clojure_lsp",
+  "cssls",
+  "html",
+  "jsonls",
+  "pyright",
+  "rust_analyzer",
+  "sumneko_lua",
+  "tsserver",
+  "yamlls",
+}
+-- Additional server settings
+local server_settings = {
+  ["jsonls"] = {
+    json = {
+      schemas = require("schemastore").json.schemas(),
+    },
+  },
+  ["sumneko_lua"] = {
+    Lua = {
+      diagnostics = {
+        globals = { "vim" },
+      },
+      telemetry = {
+        enable = false,
+      },
+    },
+  },
+}
+require("nvim-lsp-installer").setup({
+  ensure_installed = servers,
+})
+
 local on_attach = function(client, bufnr)
   local opts = { buffer = bufnr }
   vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
@@ -217,64 +251,18 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
 
-local lsp_installer = require("nvim-lsp-installer")
-local servers = {
-  "bashls",
-  "clojure_lsp",
-  "cssls",
-  -- "gopls",
-  "html",
-  "jsonls",
-  "pyright",
-  "rust_analyzer",
-  "sumneko_lua",
-  "tsserver",
-  "yamlls",
-}
-
-for _, name in pairs(servers) do
-  local server_is_found, server = lsp_installer.get_server(name)
-  if server_is_found and not server:is_installed() then
-    print("Installing " .. name)
-    server:install()
-  end
-end
-
-local enhance_server_opts = {
-  ["jsonls"] = function(opts)
-    opts.settings = {
-      json = {
-        schemas = require("schemastore").json.schemas(),
-      },
-    }
-  end,
-  ["sumneko_lua"] = function(opts)
-    opts.settings = {
-      Lua = {
-        diagnostics = {
-          globals = { "vim" },
-        },
-        telemetry = {
-          enable = false,
-        },
-      },
-    }
-  end,
-}
-
-lsp_installer.on_server_ready(function(server)
+for _, lsp in ipairs(servers) do
   local opts = {
     on_attach = on_attach,
     capabilities = capabilities,
   }
 
-  if enhance_server_opts[server.name] then
-    -- Enhance the default opts with the server-specific ones
-    enhance_server_opts[server.name](opts)
+  if server_settings[lsp] then
+    opts.settings = server_settings[lsp]
   end
 
-  server:setup(opts)
-end)
+  require("lspconfig")[lsp].setup(opts)
+end
 
 -- LuaSnip
 local luasnip = require("luasnip")
