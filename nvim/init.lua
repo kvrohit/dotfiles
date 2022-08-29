@@ -11,15 +11,22 @@ vim.api.nvim_create_autocmd(
   { command = "source <afile> | PackerCompile", group = packer_group, pattern = "init.lua" }
 )
 
+local astro_group = vim.api.nvim_create_augroup("Astro", { clear = true })
+vim.api.nvim_create_autocmd(
+  { "BufNewFile", "BufRead" },
+  { command = "setfiletype astro", group = astro_group, pattern = "*.astro" }
+)
+
 require("packer").startup(function(use)
   use("wbthomason/packer.nvim") -- Package manager
+  use("lewis6991/impatient.nvim") -- Speed up loading Lua modules in Neovim to improve startup time.
   use("tpope/vim-repeat") -- Enhanced dot repeat
   use("tpope/vim-surround") -- The quintessential surround plugin
   use("tpope/vim-fugitive") -- Git in nvim
   use("tpope/vim-sleuth") -- Autodetect indentation
   use("numToStr/Comment.nvim") -- Better comments
   use("lukas-reineke/indent-blankline.nvim") -- Indentation guides
-  use("jose-elias-alvarez/buftabline.nvim") -- Buffers in tabline
+  use({ "akinsho/bufferline.nvim", tag = "v2.*", requires = "kyazdani42/nvim-web-devicons" }) -- A snazzy bufferline
   use("akinsho/nvim-toggleterm.lua") -- Toggleterm
   use("max397574/better-escape.nvim") -- Better escape
   use("phaazon/hop.nvim") -- Hop
@@ -28,8 +35,9 @@ require("packer").startup(function(use)
   use({ "lewis6991/gitsigns.nvim", requires = { "nvim-lua/plenary.nvim" } }) -- Git info in sign column
   use("nvim-treesitter/nvim-treesitter") -- Fast incremental parsing library
   use("nvim-treesitter/nvim-treesitter-textobjects") -- Additional text-objects for treesitter
+  use("nvim-treesitter/nvim-treesitter-context") -- Context around editing
   use("neovim/nvim-lspconfig") -- Configurations for built-in LSP client
-  use("williamboman/nvim-lsp-installer") -- Installer for language servers
+  use({ "williamboman/mason.nvim" }) -- Easily install and manage LSP servers, DAP servers, linters, and formatters.
   use("hrsh7th/nvim-cmp") -- Autocompletion plugin
   use("hrsh7th/cmp-nvim-lsp") -- Completion source: LSP
   use("hrsh7th/cmp-buffer") -- Completion source: buffer
@@ -43,9 +51,37 @@ require("packer").startup(function(use)
   use({ "abecodes/tabout.nvim", requires = { "nvim-treesitter/nvim-treesitter" } }) -- Tab out from parentheses, quotes, and similar contexts
   use({ "eraserhd/parinfer-rust", run = "cargo build --release" }) -- Pair infer
   use("/Users/rohit/play/neovim/rasmus.nvim") -- Colorscheme
+  use("/Users/rohit/play/neovim/substrata.nvim") -- Colorscheme
   use("kvrohit/tasks.nvim") -- Manage todo lists
   use("Olical/conjure") -- Interactive environment for evaluating code
+  use({
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v2.x",
+    requires = {
+      "nvim-lua/plenary.nvim",
+      "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+    },
+  })
+  use("norcalli/nvim-colorizer.lua")
+  use({
+    "anuvyklack/hydra.nvim",
+    requires = "anuvyklack/keymap-layer.nvim", -- needed only for pink hydras
+  })
+  use({
+    "folke/which-key.nvim",
+    config = function()
+      require("which-key").setup({})
+    end,
+  })
+  use({
+    "nvim-neorg/neorg",
+    requires = "nvim-lua/plenary.nvim",
+  })
+  use({ "lepture/vim-jinja" })
 end)
+
+require("impatient")
 
 vim.opt.laststatus = 3
 vim.opt.hlsearch = false
@@ -66,6 +102,7 @@ vim.opt.splitright = true
 vim.opt.splitbelow = true
 vim.opt.showmode = false
 vim.opt.wrap = false
+vim.opt.timeoutlen = 500
 
 -- Remap space as leader key
 vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
@@ -90,17 +127,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 -- Better escape
 require("better_escape").setup()
-
--- Buftabline
-require("buftabline").setup({
-  tab_format = " #{n}> #{b} ",
-  icon_colors = false,
-  hlgroups = {
-    modified_current = "VisualMode",
-    modified_normal = "Warnings",
-    modified_active = "VisualMode",
-  },
-})
 
 -- Comment
 require("Comment").setup()
@@ -128,6 +154,10 @@ end)
 vim.keymap.set("o", "F", function()
   hop.hint_char1({ direction = hop_hint.HintDirection.BEFORE_CURSOR, current_line_only = true, inclusive_jump = true })
 end)
+
+-- Neo-tree
+require("neo-tree").setup()
+vim.keymap.set("n", "\\", ":NeoTreeReveal<cr>")
 
 -- Tasks
 vim.keymap.set("n", "<leader>tt", require("task").toggle)
@@ -164,11 +194,65 @@ require("gitsigns").setup()
 
 -- Treesitter
 require("nvim-treesitter.configs").setup({
-  ensure_installed = "all",
-  highlight = { enable = true },
-  autotag = { enable = true },
-  indent = { enable = true },
+  highlight = {
+    enable = true, -- false will disable the whole extension
+  },
+  autotag = {
+    enable = true,
+  },
+  incremental_selection = {
+    enable = true,
+    keymaps = {
+      init_selection = "gnn",
+      node_incremental = "grn",
+      scope_incremental = "grc",
+      node_decremental = "grm",
+    },
+  },
+  indent = {
+    enable = true,
+  },
+  textobjects = {
+    select = {
+      enable = true,
+      lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+      keymaps = {
+        -- You can use the capture groups defined in textobjects.scm
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+      },
+    },
+    move = {
+      enable = true,
+      set_jumps = true, -- whether to set jumps in the jumplist
+      goto_next_start = {
+        ["]m"] = "@function.outer",
+        ["]]"] = "@class.outer",
+      },
+      goto_next_end = {
+        ["]M"] = "@function.outer",
+        ["]["] = "@class.outer",
+      },
+      goto_previous_start = {
+        ["[m"] = "@function.outer",
+        ["[["] = "@class.outer",
+      },
+      goto_previous_end = {
+        ["[M"] = "@function.outer",
+        ["[]"] = "@class.outer",
+      },
+    },
+  },
 })
+
+-- Colorizer
+require("colorizer").setup({
+  "*",
+  css = { rgb = true, rgb_fn = true },
+  scss = { rgb = true, rgb_fn = true },
+}, { names = false })
 
 -- Toggleterm
 require("toggleterm").setup({
@@ -185,17 +269,19 @@ require("toggleterm").setup({
 })
 
 -- Diagnostic keymaps
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float)
+vim.keymap.set("n", "<leader>df", vim.diagnostic.open_float)
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next)
-vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist)
+vim.keymap.set("n", "<leader>dq", vim.diagnostic.setloclist)
 
 -- LSP
 local servers = {
+  "astro",
   "bashls",
   "clojure_lsp",
   "cssls",
   "html",
+  "jdtls",
   "jsonls",
   "pyright",
   "rust_analyzer",
@@ -221,9 +307,9 @@ local server_settings = {
     },
   },
 }
-require("nvim-lsp-installer").setup({
-  ensure_installed = servers,
-})
+
+-- Mason
+require("mason").setup()
 
 local on_attach = function(client, bufnr)
   local opts = { buffer = bufnr }
@@ -268,6 +354,33 @@ end
 local luasnip = require("luasnip")
 
 -- Autocompletion
+local icons = {
+  Text = "",
+  Method = "",
+  Function = "",
+  Constructor = "⌘",
+  Field = "ﰠ",
+  Variable = "",
+  Class = "ﴯ",
+  Interface = "",
+  Module = "",
+  Property = "ﰠ",
+  Unit = "塞",
+  Value = "",
+  Enum = "",
+  Keyword = "廓",
+  Snippet = "",
+  Color = "",
+  File = "",
+  Reference = "",
+  Folder = "",
+  EnumMember = "",
+  Constant = "",
+  Struct = "פּ",
+  Event = "",
+  Operator = "",
+  TypeParameter = "",
+}
 local cmp = require("cmp")
 cmp.setup({
   snippet = {
@@ -287,7 +400,7 @@ cmp.setup({
       behavior = cmp.ConfirmBehavior.Replace,
       select = true,
     }),
-    ["<Tab>"] = function(fallback)
+    ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
@@ -295,8 +408,8 @@ cmp.setup({
       else
         fallback()
       end
-    end,
-    ["<S-Tab>"] = function(fallback)
+    end, { "i", "s" }),
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
       elseif luasnip.jumpable(-1) then
@@ -304,7 +417,7 @@ cmp.setup({
       else
         fallback()
       end
-    end,
+    end, { "i", "s" }),
   }),
   sources = {
     { name = "nvim_lsp" },
@@ -315,6 +428,14 @@ cmp.setup({
   experimental = {
     ghost_text = true,
   },
+  formatting = {
+    fields = { "kind", "abbr", "menu" },
+    format = function(_, vim_item)
+      vim_item.menu = vim_item.kind
+      vim_item.kind = icons[vim_item.kind]
+      return vim_item
+    end,
+  },
 })
 
 -- Null-ls
@@ -322,16 +443,19 @@ require("null-ls").setup({
   sources = {
     require("null-ls").builtins.formatting.stylua,
     require("null-ls").builtins.formatting.black,
-    require("null-ls").builtins.formatting.prettier,
+    require("null-ls").builtins.formatting.prettierd.with({
+      extra_filetypes = { "astro" },
+    }),
     require("null-ls").builtins.formatting.rustfmt,
     require("null-ls").builtins.formatting.cljstyle,
     require("null-ls").builtins.formatting.xmllint,
     require("null-ls").builtins.diagnostics.eslint_d,
     require("null-ls").builtins.diagnostics.shellcheck,
+    require("null-ls").builtins.diagnostics.yamllint,
   },
 })
 vim.keymap.set("n", "<leader><leader>s", function()
-  vim.lsp.buf.formatting_sync()
+  vim.lsp.buf.formatting_sync(nil, 2000)
   vim.cmd([[w]])
 end)
 
@@ -442,12 +566,179 @@ require("feline").setup({
       },
     },
   },
-  disable = {
-    filetypes = {
-      "neo-tree",
-    },
+})
+
+-- Hydra
+local Hydra = require("hydra")
+
+Hydra({
+  name = "Side scroll",
+  mode = "n",
+  body = "z",
+  heads = {
+    { "h", "5zh" },
+    { "l", "5zl", { desc = "←/→" } },
+    { "H", "zH" },
+    { "L", "zL", { desc = "half screen ←/→" } },
   },
 })
+
+local cmd = require("hydra.keymap-util").cmd
+local pcmd = require("hydra.keymap-util").pcmd
+local window_hint = [[
+ ^^^^^^^^^^^^     Move      ^^    Size   ^^   ^^     Split
+ ^^^^^^^^^^^^-------------  ^^-----------^^   ^^---------------
+ ^ ^ _k_ ^ ^  ^ ^ _K_ ^ ^   ^   _<C-k>_   ^   _s_: horizontally 
+ _h_ ^ ^ _l_  _H_ ^ ^ _L_   _<C-h>_ _<C-l>_   _v_: vertically
+ ^ ^ _j_ ^ ^  ^ ^ _J_ ^ ^   ^   _<C-j>_   ^   _q_, _c_: close
+ focus^^^^^^  window^^^^^^  ^_=_: equalize^   _z_: maximize
+ ^ ^ ^ ^ ^ ^  ^ ^ ^ ^ ^ ^   ^^ ^          ^   _o_: remain only
+ _b_: choose buffer
+]]
+
+Hydra({
+  name = "Windows",
+  hint = window_hint,
+  config = {
+    invoke_on_body = true,
+    hint = {
+      border = "rounded",
+      offset = -1,
+    },
+  },
+  mode = "n",
+  body = "<C-w>",
+  heads = {
+    { "h", "<C-w>h" },
+    { "j", "<C-w>j" },
+    { "k", pcmd("wincmd k", "E11", "close") },
+    { "l", "<C-w>l" },
+
+    { "H", cmd("WinShift left") },
+    { "J", cmd("WinShift down") },
+    { "K", cmd("WinShift up") },
+    { "L", cmd("WinShift right") },
+
+    { "=", "<C-w>=", { desc = "equalize" } },
+
+    { "s", pcmd("split", "E36") },
+    { "<C-s>", pcmd("split", "E36"), { desc = false } },
+    { "v", pcmd("vsplit", "E36") },
+    { "<C-v>", pcmd("vsplit", "E36"), { desc = false } },
+
+    { "w", "<C-w>w", { exit = true, desc = false } },
+    { "<C-w>", "<C-w>w", { exit = true, desc = false } },
+
+    { "z", cmd("MaximizerToggle!"), { desc = "maximize" } },
+    { "<C-z>", cmd("MaximizerToggle!"), { exit = true, desc = false } },
+
+    { "o", "<C-w>o", { exit = true, desc = "remain only" } },
+    { "<C-o>", "<C-w>o", { exit = true, desc = false } },
+
+    { "c", pcmd("close", "E444") },
+    { "q", pcmd("close", "E444"), { desc = "close window" } },
+    { "<C-c>", pcmd("close", "E444"), { desc = false } },
+    { "<C-q>", pcmd("close", "E444"), { desc = false } },
+
+    { "<Esc>", nil, { exit = true, desc = false } },
+  },
+})
+
+-- Which key
+local wk = require("which-key")
+wk.register({
+  ["<leader>"] = {
+    e = {
+      name = "+eval",
+      e = "Eval form",
+      r = "Eval root form",
+      w = "Eval word",
+      ce = "Eval form & display result as a comment",
+      cr = "Eval root form & display result as a comment",
+      cw = "Eval word & display result as a comment",
+      ["!"] = "Eval form & replace it with the result",
+    },
+    f = {
+      name = "+file",
+      f = "Find file",
+      b = "Find buffer",
+      g = "Grep string",
+      s = "Document symbols",
+      t = "Find tag",
+      n = { "<cmd>enew<cr>", "New file" },
+    },
+    t = {
+      name = "+task",
+      t = "Create task/mark complete",
+      c = "Cancel task",
+      d = "Undo task",
+    },
+    s = "Save",
+    d = {
+      name = "+diagnostics",
+      f = "Show diagnostics in popup",
+      q = "All diagnostics to location list",
+    },
+    ["<leader>"] = {
+      s = "Format and save",
+    },
+  },
+  ["g"] = {
+    D = "Go to declaration",
+    d = "Go to definition",
+    i = "Go to implementation",
+    r = "Go to reference",
+  },
+})
+
+-- Neorg
+require("neorg").setup({
+  load = {
+    ["core.defaults"] = {},
+  },
+})
+
+-- Bufferline
+local bufferline = require("bufferline")
+bufferline.setup({
+  options = {
+    numbers = "ordinal",
+    always_show_bufferline = false,
+    color_icons = false,
+  },
+})
+vim.keymap.set("n", "<leader>1", function()
+  bufferline.go_to_buffer(1, true)
+end, { desc = "Go to buffer 1" })
+vim.keymap.set("n", "<leader>2", function()
+  bufferline.go_to_buffer(2, true)
+end, { desc = "Go to buffer 2" })
+vim.keymap.set("n", "<leader>3", function()
+  bufferline.go_to_buffer(3, true)
+end, { desc = "Go to buffer 3" })
+vim.keymap.set("n", "<leader>4", function()
+  bufferline.go_to_buffer(4, true)
+end, { desc = "Go to buffer 4" })
+vim.keymap.set("n", "<leader>5", function()
+  bufferline.go_to_buffer(5, true)
+end, { desc = "Go to buffer 5" })
+vim.keymap.set("n", "<leader>6", function()
+  bufferline.go_to_buffer(6, true)
+end, { desc = "Go to buffer 6" })
+vim.keymap.set("n", "<leader>7", function()
+  bufferline.go_to_buffer(7, true)
+end, { desc = "Go to buffer 7" })
+vim.keymap.set("n", "<leader>8", function()
+  bufferline.go_to_buffer(8, true)
+end, { desc = "Go to buffer 8" })
+vim.keymap.set("n", "<leader>9", function()
+  bufferline.go_to_buffer(9, true)
+end, { desc = "Go to buffer 9" })
+vim.keymap.set("n", "<leader>$", function()
+  bufferline.go_to_buffer(-1, true)
+end, { desc = "Go to buffer -1" })
+
+-- vim.g.rasmus_variant = "bright"
 
 vim.cmd([[colorscheme rasmus]])
 vim.cmd([[language en_US.utf-8]])
