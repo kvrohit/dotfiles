@@ -30,6 +30,7 @@ require("packer").startup(function(use)
   use("lukas-reineke/indent-blankline.nvim") -- Add indentation guides even on blank lines
   use("tpope/vim-sleuth") -- Detect tabstop and shiftwidth automatically
   use("Olical/conjure") -- Conversational software development for neovim
+  -- Create a command `:Format` local to the LSP buffer
   use("jose-elias-alvarez/null-ls.nvim") -- Formatting
   use({ "eraserhd/parinfer-rust", run = "cargo build --release" })
   use("folke/which-key.nvim") -- Which key
@@ -37,6 +38,12 @@ require("packer").startup(function(use)
   use("j-hui/fidget.nvim") -- Display LSP loading status
   use({ "toppair/peek.nvim", run = "deno task --quiet build:fast" })
   use({ "akinsho/toggleterm.nvim", tag = "*" })
+  use({
+    "windwp/nvim-autopairs",
+    config = function()
+      require("nvim-autopairs").setup()
+    end,
+  })
   use("lewis6991/impatient.nvim") -- Speed up loading Lua modules in Neovim to improve startup time.
   use("kvrohit/tasks.nvim") -- Tasks plugin for neovim
 
@@ -51,6 +58,13 @@ require("packer").startup(function(use)
 
   -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
   use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make", cond = vim.fn.executable("make") == 1 })
+
+  use({
+    "phaazon/hop.nvim",
+    config = function()
+      require("hop").setup()
+    end,
+  })
 
   if is_bootstrap then
     require("packer").sync()
@@ -276,13 +290,20 @@ vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Set all di
 
 -- LSP settings.
 --  This function gets run when an LSP connects to a particular buffer.
-local on_attach = function(_, bufnr)
-  -- NOTE: Remember that lua is a real programming language, and as such it is possible
-  -- to define small helper and utility functions so you don't have to repeat yourself
-  -- many times.
-  --
-  -- In this case, we create a function that lets us more easily define mappings specific
-  -- for LSP related items. It sets the mode, buffer and description for us each time.
+local lsp_formatting = function(bufnr)
+  vim.lsp.buf.format({
+    filter = function(client)
+      -- apply whatever logic you want (in this example, we'll only use null-ls)
+      return client.name == "null-ls"
+    end,
+    bufnr = bufnr,
+  })
+end
+
+-- if you want to set up formatting on save, you can use this as a callback
+local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
+
+local on_attach = function(client, bufnr)
   local nmap = function(keys, func, desc)
     if desc then
       desc = "LSP: " .. desc
@@ -313,19 +334,16 @@ local on_attach = function(_, bufnr)
     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, "[W]orkspace [L]ist Folders")
 
-  -- Create a command `:Format` local to the LSP buffer
-  vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
-    if vim.lsp.buf.format then
-      vim.lsp.buf.format({
-        filter = function(client)
-          return client.name == "null-ls"
-        end,
-        bufnr = bufnr,
-      })
-    elseif vim.lsp.buf.formatting then
-      vim.lsp.buf.formatting()
-    end
-  end, { desc = "Format current buffer with LSP" })
+  if client.supports_method("textDocument/formatting") then
+    vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      group = augroup,
+      buffer = bufnr,
+      callback = function()
+        lsp_formatting(bufnr)
+      end,
+    })
+  end
 end
 
 -- nvim-cmp supports additional completion capabilities
@@ -335,8 +353,20 @@ local capabilities = require("cmp_nvim_lsp").default_capabilities()
 require("mason").setup()
 
 -- Enable the following language servers
-local servers =
-  { "astro", "clangd", "rust_analyzer", "pyright", "tsserver", "sumneko_lua", "clojure_lsp", "bashls", "yamlls" }
+local servers = {
+  "astro",
+  "clangd",
+  "rust_analyzer",
+  "pyright",
+  "tsserver",
+  "sumneko_lua",
+  "clojure_lsp",
+  "bashls",
+  "yamlls",
+  "marksman",
+  "html",
+  "cssls",
+}
 
 -- Ensure the servers above are installed
 require("mason-lspconfig").setup({
@@ -392,7 +422,7 @@ require("null-ls").setup({
     require("null-ls").builtins.formatting.beautysh,
     require("null-ls").builtins.diagnostics.eslint_d,
     require("null-ls").builtins.diagnostics.shellcheck,
-    require("null-ls").builtins.diagnostics.yamllint,
+    -- require("null-ls").builtins.diagnostics.yamllint,
   },
 })
 
@@ -488,9 +518,11 @@ local lazygit = Terminal:new({ cmd = "lazygit", hidden = true, direction = "floa
 function _lazygit_toggle()
   lazygit:toggle()
 end
+
 function _toggle_xplr()
   xplr:toggle()
 end
+
 vim.api.nvim_set_keymap("n", "<leader>g", "<cmd>lua _lazygit_toggle()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>x", "<cmd>lua _toggle_xplr()<cr>", { noremap = true, silent = true })
 

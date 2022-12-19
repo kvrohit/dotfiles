@@ -1,18 +1,18 @@
 # Font configuration
 font:
   normal:
-    family: Codelia Ligatures
+    family: Iosevka Term
     style: Regular
   bold:
-    style: Bold
+    style: Semibold
   italic:
     style: Italic
   bold_italic:
-    style: Bold Italic
-  size: 16.0
+    style: Semibold Italic
+  size: 18.0
   offset:
     x: 0
-    y: 4
+    y: 0
   glyph_offset:
     x: 0
     y: 0
