@@ -4,6 +4,8 @@
   "lualine.nvim": { "branch": "master", "commit": "fffbcb829288c3ca366f17cdb8d46aefb5c1d6f3" },
   "mellow.nvim": { "branch": "main", "commit": "1afe818b5e2869785193602ac46d32c1dea709cd" },
   "neogit": { "branch": "master", "commit": "0d6002c6af432343937283fb70791fc76fa7227c" },
+  "nvim-treesitter": { "branch": "master", "commit": "7c9ddb72d198d45895d73bc7495e1b7e9627f6ca" },
+  "nvim-treesitter-textobjects": { "branch": "master", "commit": "83a494a6f93675beff7bbd320c04c87433b1462f" },
   "plenary.nvim": { "branch": "master", "commit": "4b7e52044bbb84242158d977a50c4cbcd85070c7" },
   "tasks.nvim": { "branch": "master", "commit": "8973b8a00cf24b213581e2c8ec941945b2ff9bd2" },
   "telescope.nvim": { "branch": "master", "commit": "e960efa60e97df58e089b00270f09d60f27202c8" },
