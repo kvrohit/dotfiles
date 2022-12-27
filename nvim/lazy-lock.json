@@ -1,0 +1,13 @@
+{
+  "indent-blankline.nvim": { "branch": "master", "commit": "c4c203c3e8a595bc333abaf168fcb10c13ed5fb7" },
+  "lazy.nvim": { "branch": "main", "commit": "0f3782c06657cb33c031bf92ae6692d8b47d83f2" },
+  "lualine.nvim": { "branch": "master", "commit": "fffbcb829288c3ca366f17cdb8d46aefb5c1d6f3" },
+  "mellow.nvim": { "branch": "main", "commit": "1afe818b5e2869785193602ac46d32c1dea709cd" },
+  "neogit": { "branch": "master", "commit": "0d6002c6af432343937283fb70791fc76fa7227c" },
+  "plenary.nvim": { "branch": "master", "commit": "4b7e52044bbb84242158d977a50c4cbcd85070c7" },
+  "tasks.nvim": { "branch": "master", "commit": "8973b8a00cf24b213581e2c8ec941945b2ff9bd2" },
+  "telescope.nvim": { "branch": "master", "commit": "e960efa60e97df58e089b00270f09d60f27202c8" },
+  "vim-fugitive": { "branch": "master", "commit": "5b0b138483de17a8fd8dfcec0b491782c8fbf102" },
+  "vim-sleuth": { "branch": "master", "commit": "8332f123a63c739c870c96907d987cc3ff719d24" },
+  "which-key.nvim": { "branch": "main", "commit": "8682d3003595017cd8ffb4c860a07576647cc6f8" }
+}

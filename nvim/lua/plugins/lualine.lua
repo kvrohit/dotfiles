@@ -1,0 +1,17 @@
+local M = {
+  "nvim-lualine/lualine.nvim",
+  event = "VeryLazy",
+}
+
+M.config = function()
+  require("lualine").setup({
+    options = {
+      icons_enabled = false,
+      theme = "mellow",
+      component_separators = "|",
+      section_separators = "",
+    },
+  })
+end
+
+return M
