@@ -1,6 +1,6 @@
 # dotfiles
 
-Configurations for various programs
+Configurations for various programs.
 
 ## How to use
 

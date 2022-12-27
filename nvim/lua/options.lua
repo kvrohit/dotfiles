@@ -1,3 +1,6 @@
+-- Global statusline
+vim.o.laststatus = 3
+
 -- Set highlight on search
 vim.o.hlsearch = false
 
@@ -12,6 +15,13 @@ vim.o.breakindent = true
 
 -- Save undo history
 vim.o.undofile = true
+
+-- Disable swap files
+vim.o.swapfile = false
+
+-- Scroll offsets
+vim.o.scrolloff = 5
+vim.o.sidescrolloff = 5
 
 -- Case insensitive searching UNLESS /C or capital in search
 vim.o.ignorecase = true
@@ -30,6 +40,9 @@ vim.o.completeopt = "menuone,noselect"
 -- Sane splits
 vim.opt.splitright = true
 vim.opt.splitbelow = true
+
+-- Disable show mode
+vim.o.showmode = false
 
 -- Set <space> as the leader key
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
