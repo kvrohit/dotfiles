@@ -5,13 +5,13 @@ return {
     kind = "split",
     signs = {
       -- { CLOSED, OPENED }
-      section = { "", "" },
-      item = { "", "" },
+      section = { "+", "-" },
+      item = { "+", "-" },
       hunk = { "", "" },
     },
     integrations = { diffview = true },
   },
   keys = {
-    { "<leader>gg", "<cmd>Neogit kind=floating<cr>", desc = "Neogit" },
+    { "<leader>gg", "<cmd>Neogit<cr>", desc = "Neogit" },
   },
 }
