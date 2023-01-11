@@ -1,5 +1,7 @@
 local M = {
   "jose-elias-alvarez/null-ls.nvim",
+  event = "BufReadPre",
+  dependencies = { "mason.nvim" },
 }
 
 M.setup = function(options)

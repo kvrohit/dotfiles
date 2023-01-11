@@ -1,5 +1,4 @@
 return {
-  "folke/which-key.nvim",
   {
     "tpope/vim-sleuth",
     event = "BufReadPre",
@@ -18,6 +17,13 @@ return {
   {
     "eraserhd/parinfer-rust",
     build = "cargo build --release",
-    event = "BufReadPost",
+    event = "VeryLazy",
+  },
+  {
+    "max397574/better-escape.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("better_escape").setup()
+    end,
   },
 }

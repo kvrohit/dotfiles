@@ -6,6 +6,9 @@ local M = {
 M.dependencies = {
   { "hrsh7th/cmp-nvim-lsp" },
   { "j-hui/fidget.nvim" },
+  "mason.nvim",
+  "williamboman/mason-lspconfig.nvim",
+  "hrsh7th/cmp-nvim-lsp",
 }
 
 M.config = function()

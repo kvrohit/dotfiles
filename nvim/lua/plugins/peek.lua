@@ -15,7 +15,7 @@ local M = {
       desc = "Peek (Markdown Preview)",
     },
   },
-  config = {
+  opts = {
     theme = "light", -- 'dark' or 'light'
   },
 }
