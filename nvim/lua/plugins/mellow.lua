@@ -1,10 +1,7 @@
-local M = {
+return {
   "kvrohit/mellow.nvim",
   lazy = false,
+  config = function()
+    vim.cmd([[colorscheme mellow]])
+  end,
 }
-
-M.config = function ()
-  vim.cmd [[colorscheme mellow]]
-end
-
-return M

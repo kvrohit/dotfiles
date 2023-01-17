@@ -25,6 +25,10 @@ local function diagnostics()
   require("telescope.builtin").diagnostics({})
 end
 
+local function buffers()
+  require("telescope.builtin").buffers({})
+end
+
 M.dependencies = {
   { "nvim-lua/plenary.nvim" },
 }
@@ -33,6 +37,7 @@ M.keys = {
   { "<leader>f", project_files, desc = "Open file picker" },
   { "<leader>/", live_grep, desc = "Global search" },
   { "<leader>d", diagnostics, desc = "Open diagnostic picker" },
+  { "<leader>b", buffers, desc = "Open buffer picker" },
 }
 
 M.config = function()

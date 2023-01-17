@@ -26,4 +26,7 @@ return {
       require("better_escape").setup()
     end,
   },
+  {
+    "MunifTanjim/nui.nvim"
+  },
 }

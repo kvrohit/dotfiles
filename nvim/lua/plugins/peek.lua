@@ -1,4 +1,4 @@
-local M = {
+return {
   "toppair/peek.nvim",
   build = "deno task --quiet build:fast",
   keys = {
@@ -19,5 +19,3 @@ local M = {
     theme = "light", -- 'dark' or 'light'
   },
 }
-
-return M

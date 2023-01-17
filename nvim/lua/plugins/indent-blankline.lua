@@ -1,4 +1,4 @@
-local M = {
+return {
   "lukas-reineke/indent-blankline.nvim",
   event = "BufReadPre",
   opts = {
@@ -41,5 +41,3 @@ local M = {
     },
   },
 }
-
-return M
