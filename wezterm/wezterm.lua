@@ -38,10 +38,10 @@ local tab_bar_colors = {
 }
 
 return {
-  font_size = 17.0,
-  line_height = 1.2,
+  font_size = 18.0,
+  line_height = 1.0,
   font = wezterm.font_with_fallback({
-    { family = "Cascadia Code PL", weight = "Regular" },
+    { family = "Iosevka Fixed", weight = "Regular" },
     "Symbols Nerd Font",
   }),
   -- harfbuzz_features = { "calt=0", "clig=0", "liga=0" },
