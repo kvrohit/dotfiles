@@ -23,9 +23,5 @@ Install apps using `pacman -S <application>` or from AUR (`paru` or `yay`)
 
 ### neovim
 
-1. Install neovim `> 0.5` using any of the package managers that works with your OS.
+1. Install neovim `> 0.8` using any of the package managers that works with your OS.
 2. Launch `neovim` and follow the onscreen instructions.
-
-### subsection
-
-This is the [up top](#dotfiles) section
