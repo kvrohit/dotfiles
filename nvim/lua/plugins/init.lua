@@ -27,6 +27,23 @@ return {
     end,
   },
   {
-    "MunifTanjim/nui.nvim"
+    "MunifTanjim/nui.nvim",
+  },
+  {
+    "kylechui/nvim-surround",
+    event = "VeryLazy",
+    config = function()
+      require("nvim-surround").setup()
+    end,
+  },
+  {
+    "akinsho/toggleterm.nvim",
+    event = "VeryLazy",
+    config = function()
+      require("toggleterm").setup({
+        open_mapping = [[<F12>]],
+        shade_terminals = false,
+      })
+    end,
   },
 }

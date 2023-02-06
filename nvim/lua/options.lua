@@ -44,6 +44,9 @@ vim.opt.splitbelow = true
 -- Disable show mode
 vim.o.showmode = false
 
+-- Clean UI
+vim.o.cmdheight = 0
+
 -- Set <space> as the leader key
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = " "
