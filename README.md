@@ -1,6 +1,6 @@
 # dotfiles
 
-Configurations for various programs
+Configurations for various programs.
 
 ## How to use
 
@@ -23,6 +23,5 @@ Install apps using `pacman -S <application>` or from AUR (`paru` or `yay`)
 
 ### neovim
 
-1. Install neovim `> 0.5` using any of the package managers that works with your OS.
-2. Install packer `git clone https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim`.
-3. Launch `neovim` and run `:PackerSync` to install all plugins.
+1. Install neovim `> 0.8` using any of the package managers that works with your OS.
+2. Launch `neovim` and follow the onscreen instructions.

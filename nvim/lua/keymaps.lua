@@ -1,66 +1,39 @@
-local opts = { noremap = true, silent = true }
+-- Keymaps for better default experience
+-- See `:help vim.keymap.set()`
+vim.keymap.set({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 
--- general
-vim.api.nvim_set_keymap("n", "<Leader>d", ":bd<CR>", opts)
-vim.api.nvim_set_keymap("n", "<Leader>s", ":w<CR>", opts)
-vim.api.nvim_set_keymap("n", "<Leader>qn", ":cnext<CR>", opts)
-vim.api.nvim_set_keymap("n", "<Leader>qp", ":cprevious<CR>", opts)
-vim.api.nvim_set_keymap("t", "<Esc>", "<C-\\><C-n>", opts)
-vim.api.nvim_set_keymap("", "<Space>", "<Nop>", opts)
-vim.api.nvim_set_keymap("n", "<Leader>fs", "<cmd>lua vim.lsp.buf.formatting_sync()<CR>:w<CR>", opts)
+-- Remap for dealing with word wrap
+vim.keymap.set("n", "k", "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+vim.keymap.set("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
--- sane up and down movements for word wrap
--- vim.api.nvim_set_keymap("n", "k", "v:count == 0 ? 'gk' : 'k'", { noremap = true, expr = true, silent = true })
--- vim.api.nvim_set_keymap("n", "j", "v:count == 0 ? 'gj' : 'j'", { noremap = true, expr = true, silent = true })
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 
--- nvim-tasks
-vim.api.nvim_set_keymap("n", "<Leader>tt", ":ToggleTask<CR>", opts)
-vim.api.nvim_set_keymap("n", "<Leader>tc", ":CancelTask<CR>", opts)
-vim.api.nvim_set_keymap("n", "<Leader>td", ":UndoTask<CR>", opts)
+vim.keymap.set("n", "J", "mzJ`z")
+vim.keymap.set("n", "<C-d>", "<C-d>zz")
+vim.keymap.set("n", "<C-u>", "<C-u>zz")
+vim.keymap.set("n", "n", "nzzzv")
+vim.keymap.set("n", "N", "Nzzzv")
 
--- hop
-vim.api.nvim_set_keymap(
-  "n",
-  "f",
-  "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>",
-  {}
-)
-vim.api.nvim_set_keymap(
-  "n",
-  "F",
-  "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>",
-  {}
-)
-vim.api.nvim_set_keymap(
-  "o",
-  "f",
-  "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true, inclusive_jump = true })<cr>",
-  {}
-)
-vim.api.nvim_set_keymap(
-  "o",
-  "F",
-  "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true, inclusive_jump = true })<cr>",
-  {}
-)
-vim.api.nvim_set_keymap(
-  "",
-  "t",
-  "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.AFTER_CURSOR, current_line_only = true })<cr>",
-  {}
-)
-vim.api.nvim_set_keymap(
-  "",
-  "T",
-  "<cmd>lua require'hop'.hint_char1({ direction = require'hop.hint'.HintDirection.BEFORE_CURSOR, current_line_only = true })<cr>",
-  {}
-)
+-- greatest remap ever
+vim.keymap.set("x", "<leader>p", [["_dP]])
 
--- buffers
-vim.api.nvim_set_keymap("n", "<Left>", ":BufPrev<CR>", opts)
-vim.api.nvim_set_keymap("n", "<Right>", ":BufNext<CR>", opts)
+-- next greatest remap ever : asbjornHaland
+vim.keymap.set({"n", "v"}, "<leader>y", [["+y]])
+vim.keymap.set("n", "<leader>Y", [["+Y]])
 
--- commands
-vim.cmd([[command! Format execute 'lua vim.lsp.buf.formatting()']])
-vim.cmd([[au TermOpen * setlocal nonu nornu]])
-vim.cmd([[au TextYankPost * lua vim.highlight.on_yank {on_visual = false}]])
+vim.keymap.set({"n", "v"}, "<leader>d", [["_d]])
+
+vim.keymap.set("n", "Q", "<nop>")
+
+vim.keymap.set("n", "<C-k>", "<cmd>cnext<CR>zz")
+vim.keymap.set("n", "<C-j>", "<cmd>cprev<CR>zz")
+vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
+vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
+
+-- Clear search with <esc>
+vim.keymap.set({ "i", "n" }, "<esc>", "<cmd>noh<cr><esc>", { desc = "Escape and clear hlsearch" })
+
+-- Better indenting
+vim.keymap.set("v", "<", "<gv")
+vim.keymap.set("v", ">", ">gv")

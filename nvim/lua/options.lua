@@ -1,57 +1,53 @@
--- colorscheme
-vim.api.nvim_set_option("termguicolors", true)
-vim.g.substrata_italic_booleans = true
-vim.g.substrata_italic_functions = true
-vim.g.substrata_italic_keywords = true
-vim.g.substrata_variant = "brighter"
-vim.g.rasmus_italic_functions = true
-vim.cmd([[colorscheme rasmus]])
--- vim.g.tokyonight_transparent = true
--- vim.cmd [[colorscheme tokyonight]]
-vim.cmd([[language en_US.utf-8]])
+-- Global statusline
+vim.o.laststatus = 3
 
--- options
-vim.opt.laststatus = 2
-vim.opt.undofile = true
-vim.opt.swapfile = false
-vim.opt.backup = false
-vim.opt.mouse = "a"
-vim.opt.ruler = false
+-- Set highlight on search
+vim.o.hlsearch = false
+
+-- Make line numbers default
+vim.wo.number = true
+
+-- Enable mouse mode
+vim.o.mouse = "a"
+
+-- Enable break indent
+vim.o.breakindent = true
+
+-- Save undo history
+vim.o.undofile = true
+
+-- Disable swap files
+vim.o.swapfile = false
+
+-- Scroll offsets
+vim.o.scrolloff = 5
+vim.o.sidescrolloff = 5
+
+-- Case insensitive searching UNLESS /C or capital in search
+vim.o.ignorecase = true
+vim.o.smartcase = true
+
+-- Decrease update time
+vim.o.updatetime = 250
+vim.wo.signcolumn = "yes"
+
+-- Set colorscheme
+vim.o.termguicolors = true
+
+-- Set completeopt to have a better completion experience
+vim.o.completeopt = "menuone,noselect"
+
+-- Sane splits
 vim.opt.splitright = true
 vim.opt.splitbelow = true
-vim.opt.ignorecase = true
-vim.opt.hlsearch = false
-vim.opt.updatetime = 250
-vim.opt.scrolloff = 5
-vim.opt.sidescrolloff = 5
-vim.opt.completeopt = "menu,menuone,noselect"
-vim.opt.shortmess = vim.o.shortmess .. "c"
-vim.opt.showmode = false
-vim.opt.number = true
-vim.opt.relativenumber = true
-vim.opt.signcolumn = "yes"
-vim.opt.wrap = false
-vim.opt.cursorline = true
-vim.opt.colorcolumn = "120"
 
--- indent
-vim.opt.tabstop = 4
-vim.opt.softtabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.shiftround = true
-vim.opt.autoindent = true
-vim.opt.expandtab = true
+-- Disable show mode
+vim.o.showmode = false
 
--- set leader to space
+-- Clean UI
+vim.o.cmdheight = 0
+
+-- Set <space> as the leader key
+--  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-vim.b.mapleader = " "
-vim.b.maplocalleader = " "
-
--- indentline
-vim.g.indent_blankline_setColors = 0
-vim.g.indent_blankline_defaultGroup = "SpecialKey"
-vim.g.indent_blankline_char = "│"
-vim.g.indent_blankline_use_treesitter = true
-vim.g.indent_blankline_show_trailing_blankline_indent = false
-vim.g.indent_blankline_filetype_exclude = { "help", "fugitive", "packer" }
