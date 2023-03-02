@@ -1,6 +1,7 @@
 return {
   "toppair/peek.nvim",
   build = "deno task --quiet build:fast",
+  ft = "markdown",
   keys = {
     {
       "<leader>op",

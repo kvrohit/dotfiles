@@ -29,13 +29,13 @@ return {
   {
     "MunifTanjim/nui.nvim",
   },
-  {
-    "kylechui/nvim-surround",
-    event = "VeryLazy",
-    config = function()
-      require("nvim-surround").setup()
-    end,
-  },
+  -- {
+  --   "kylechui/nvim-surround",
+  --   event = "VeryLazy",
+  --   config = function()
+  --     require("nvim-surround").setup()
+  --   end,
+  -- },
   {
     "akinsho/toggleterm.nvim",
     event = "VeryLazy",
@@ -44,6 +44,17 @@ return {
         open_mapping = [[<F12>]],
         shade_terminals = false,
       })
+    end,
+  },
+  {
+    "echasnovski/mini.nvim",
+    event = "VeryLazy",
+    version = false,
+    config = function()
+      require("mini.bracketed").setup()
+      require("mini.move").setup()
+      require("mini.pairs").setup()
+      require("mini.surround").setup()
     end,
   },
 }
